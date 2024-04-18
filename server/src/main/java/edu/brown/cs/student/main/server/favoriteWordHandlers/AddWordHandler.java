@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.handlers;
+package edu.brown.cs.student.main.server.favoriteWordHandlers;
 
 import edu.brown.cs.student.main.server.storage.StorageInterface;
 import java.util.HashMap;
