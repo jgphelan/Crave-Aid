@@ -72,16 +72,5 @@ public class Server {
   public static void main(String[] args) {
     new Server();
     System.out.println("Server started at http://localhost:" + port);
-    System.out.println(
-        """
-        1. Call the redliningData endpoint to query redlining data for major U.S. cities in the 1930’s, sourced from Mapping Inequality:
-        http://localhost:port/redliningData (to query all data)
-        OR
-        http://localhost:port/redliningData?minLat=Number&maxLat=Number&minLong=Number&maxLong=Number (to query data for regions enclosed by a specific bounding box of coordinates)
-
-        2. Call the redliningSearch endpoint to search the redlining data for major U.S. cities in the 1930’s (from Mapping Inequality) for
-        areas whose area descriptions contain a certain keyword:
-        http://localhost:port/redliningSearch?keyword=String
-        """);
   }
 }
