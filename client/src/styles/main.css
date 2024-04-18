@@ -1,0 +1,51 @@
+/*
+  This is a reasonable starting point for the CSS in Mock.
+  Positioning in CSS can sometimes be annoying to manage, so we've opted to 
+  give you this starter CSS. Feel free to modify it as you wish, though.
+*/
+
+.repl {
+  position: relative;
+  min-height: 76vh;
+}
+
+.repl-history {
+  height: 65vh;
+  margin: auto;
+  background-color: rgb(156, 229, 255);
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.repl-input {
+  margin: auto;
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.html-table {
+  margin-left: auto;
+  margin-right: auto;
+  color: bisque;
+}
+
+.repl-command-box {
+  width: 90%;
+  margin: auto;
+  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.outputCommand {
+  color: rgb(37, 220, 187);
+  font-weight: bold;
+}
+
+button {
+  flex-direction: column;
+  margin: auto;
+  display: flex;
+}
