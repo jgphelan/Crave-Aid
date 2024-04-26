@@ -20,4 +20,6 @@ public interface StorageInterface {
   void clearUser(String uid) throws InterruptedException;
 
   void addIngredient(String uid, String collectionName, String ingredientName);
+
+  public void removeIngredient(String uid, String collectionName, String ingredientName);
 }

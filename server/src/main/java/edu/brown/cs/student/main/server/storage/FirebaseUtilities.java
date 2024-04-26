@@ -49,6 +49,14 @@ public class FirebaseUtilities implements StorageInterface {
     collectionRef.document(ingredientName).set(ingredientData);
   }
 
+  @Override
+  public void removeIngredient(String uid, String collectionName, String ingredientName) {
+    Firestore db = FirestoreClient.getFirestore();
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    collectionRef.document(ingredientName).delete();
+  }
+
   // @Override
   // public void addPin(String uid, String pinId, double lat, double lng) {
   //   Firestore db = FirestoreClient.getFirestore();

@@ -28,6 +28,18 @@ export async function addIngredient(collection: string, ingredient: string) {
   return queryAPI(endpoint, queryParams);
 }
 
+export async function removeIngredient(collection: string, ingredient: string) {
+  const uid = getLoginCookie();
+  if (!uid) throw new Error("User ID not found.");
+
+  const endpoint = `remove-ingredient/${collection}/${encodeURIComponent(
+    ingredient
+  )}`;
+  const queryParams = { uid };
+
+  return queryAPI(endpoint, queryParams);
+}
+
 export async function clearUser(uid: string = getLoginCookie() || "") {
   return await queryAPI("clear-user", {
     uid: uid,
