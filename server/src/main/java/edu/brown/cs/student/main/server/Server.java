@@ -4,9 +4,6 @@ import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.handlers.ClearUserHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.AddIngredientHandler;
-import edu.brown.cs.student.main.server.pinHandlers.AddPinHandler;
-import edu.brown.cs.student.main.server.pinHandlers.ClearPinsHandler;
-import edu.brown.cs.student.main.server.pinHandlers.GetPinsHandler;
 import edu.brown.cs.student.main.server.redlining.redliningData.CachedRedlining;
 import edu.brown.cs.student.main.server.redlining.redliningData.RedliningDataHandler;
 import edu.brown.cs.student.main.server.redlining.redliningData.RedliningReal;
@@ -52,9 +49,9 @@ public class Server {
 
     // Add similar routes for removing, getting, and clearing ingredients
 
-    Spark.get("/add-pin", new AddPinHandler(firebase_utility));
-    Spark.get("/get-pins", new GetPinsHandler(firebase_utility));
-    Spark.get("/clear-pins", new ClearPinsHandler(firebase_utility));
+    // Spark.get("/add-pin", new AddPinHandler(firebase_utility));
+    // Spark.get("/get-pins", new GetPinsHandler(firebase_utility));
+    // Spark.get("/clear-pins", new ClearPinsHandler(firebase_utility));
 
     // CLEARING USER (for e2e testing)
     Spark.get("/clear-user", new ClearUserHandler(firebase_utility));
