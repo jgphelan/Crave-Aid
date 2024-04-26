@@ -16,26 +16,13 @@ async function queryAPI(
   return response.json();
 }
 
-export async function addPin(lat: number, lng: number, id: number) {
-  const uid = getLoginCookie() || "";
-  if (!uid) throw new Error("User ID not found.");
-
-  const endpoint = "add-pin";
-  const queryParams = {
-    uid,
-    lat: lat.toString(),
-    lng: lng.toString(),
-    id: id.toString(),
-  };
-
-  return queryAPI(endpoint, queryParams);
-}
-
-export async function clearPins() {
+export async function addIngredient(collection: string, ingredient: string) {
   const uid = getLoginCookie();
   if (!uid) throw new Error("User ID not found.");
 
-  const endpoint = "clear-pins";
+  const endpoint = `add-ingredient/${collection}/${encodeURIComponent(
+    ingredient
+  )}`;
   const queryParams = { uid };
 
   return queryAPI(endpoint, queryParams);

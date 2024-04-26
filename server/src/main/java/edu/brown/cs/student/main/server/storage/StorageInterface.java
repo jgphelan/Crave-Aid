@@ -18,4 +18,6 @@ public interface StorageInterface {
   void clearPins(String uid);
 
   void clearUser(String uid) throws InterruptedException;
+
+  void addIngredient(String uid, String collectionName, String ingredientName);
 }

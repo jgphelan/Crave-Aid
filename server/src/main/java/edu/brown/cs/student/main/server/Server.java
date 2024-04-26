@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.handlers.ClearUserHandler;
+import edu.brown.cs.student.main.server.ingredientHandlers.AddIngredientHandler;
 import edu.brown.cs.student.main.server.pinHandlers.AddPinHandler;
 import edu.brown.cs.student.main.server.pinHandlers.ClearPinsHandler;
 import edu.brown.cs.student.main.server.pinHandlers.GetPinsHandler;
@@ -45,6 +46,11 @@ public class Server {
       e.printStackTrace();
       return;
     }
+
+    Spark.get(
+        "/add-ingredient/:collection/:ingredient", new AddIngredientHandler(firebase_utility));
+
+    // Add similar routes for removing, getting, and clearing ingredients
 
     Spark.get("/add-pin", new AddPinHandler(firebase_utility));
     Spark.get("/get-pins", new GetPinsHandler(firebase_utility));
