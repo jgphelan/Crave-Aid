@@ -22,4 +22,9 @@ public interface StorageInterface {
   void addIngredient(String uid, String collectionName, String ingredientName);
 
   public void removeIngredient(String uid, String collectionName, String ingredientName);
+
+  public List<String> getAllIngredients(String uid, String collectionName)
+      throws InterruptedException, ExecutionException;
+
+  public void clearAllIngredients(String uid, String collectionName);
 }

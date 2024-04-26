@@ -4,6 +4,8 @@ import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.handlers.ClearUserHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.AddIngredientHandler;
+import edu.brown.cs.student.main.server.ingredientHandlers.ClearIngredientsHandler;
+import edu.brown.cs.student.main.server.ingredientHandlers.GetAllIngredientsHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.RemoveIngredientHandler;
 import edu.brown.cs.student.main.server.redlining.redliningData.CachedRedlining;
 import edu.brown.cs.student.main.server.redlining.redliningData.RedliningDataHandler;
@@ -50,6 +52,8 @@ public class Server {
     Spark.get(
         "/remove-ingredient/:collection/:ingredient",
         new RemoveIngredientHandler(firebase_utility));
+    Spark.get("/get-ingredients/:collection", new GetAllIngredientsHandler(firebase_utility));
+    Spark.get("/clear-ingredients/:collection", new ClearIngredientsHandler(firebase_utility));
 
     // Add similar routes for removing, getting, and clearing ingredients
 

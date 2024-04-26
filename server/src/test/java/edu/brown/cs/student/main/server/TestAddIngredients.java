@@ -29,29 +29,33 @@ class MockFirebaseUtilitiesTest {
     assertTrue(userCollections.containsKey(collectionName));
     assertTrue(userCollections.get(collectionName).containsKey(ingredientName));
     assertEquals("Sugar", userCollections.get(collectionName).get(ingredientName).get("name"));
+    mockFirebaseUtilities.clearUser(uid);
   }
 
   @Test
   void testAddMultipleIngredients() {
-    mockFirebaseUtilities.addIngredient("user1", "ingredient_pantry", "Flour");
-    mockFirebaseUtilities.addIngredient("user1", "ingredient_pantry", "Sugar");
+    String uid = "user1";
+    mockFirebaseUtilities.addIngredient(uid, "ingredient_pantry", "Flour");
+    mockFirebaseUtilities.addIngredient(uid, "ingredient_pantry", "Sugar");
 
-    assertEquals(
-        2, mockFirebaseUtilities.getUserData().get("user1").get("ingredient_pantry").size());
+    assertEquals(2, mockFirebaseUtilities.getUserData().get(uid).get("ingredient_pantry").size());
     assertNotNull(
-        mockFirebaseUtilities.getUserData().get("user1").get("ingredient_pantry").get("Flour"));
+        mockFirebaseUtilities.getUserData().get(uid).get("ingredient_pantry").get("Flour"));
     assertNotNull(
-        mockFirebaseUtilities.getUserData().get("user1").get("ingredient_pantry").get("Sugar"));
+        mockFirebaseUtilities.getUserData().get(uid).get("ingredient_pantry").get("Sugar"));
+    mockFirebaseUtilities.clearUser(uid);
   }
 
   @Test
   void testAddIngredientsToDifferentCollections() {
-    mockFirebaseUtilities.addIngredient("user1", "ingredient_pantry", "Salt");
-    mockFirebaseUtilities.addIngredient("user1", "banned_ingredients", "Pepper");
+    String uid = "user2";
+    mockFirebaseUtilities.addIngredient(uid, "ingredient_pantry", "Salt");
+    mockFirebaseUtilities.addIngredient(uid, "banned_ingredients", "Pepper");
 
     assertNotNull(
-        mockFirebaseUtilities.getUserData().get("user1").get("ingredient_pantry").get("Salt"));
+        mockFirebaseUtilities.getUserData().get(uid).get("ingredient_pantry").get("Salt"));
     assertNotNull(
-        mockFirebaseUtilities.getUserData().get("user1").get("banned_ingredients").get("Pepper"));
+        mockFirebaseUtilities.getUserData().get(uid).get("banned_ingredients").get("Pepper"));
+    mockFirebaseUtilities.clearUser(uid);
   }
 }

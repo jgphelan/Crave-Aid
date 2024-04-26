@@ -2,6 +2,8 @@ package edu.brown.cs.student.main.server.storage;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -55,6 +57,28 @@ public class FirebaseUtilities implements StorageInterface {
     CollectionReference collectionRef =
         db.collection("users").document(uid).collection(collectionName);
     collectionRef.document(ingredientName).delete();
+  }
+
+  @Override
+  public List<String> getAllIngredients(String uid, String collectionName)
+      throws InterruptedException, ExecutionException {
+    Firestore db = FirestoreClient.getFirestore();
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    List<String> ingredients = new ArrayList<>();
+    List<QueryDocumentSnapshot> documents = collectionRef.get().get().getDocuments();
+    for (DocumentSnapshot document : documents) {
+      ingredients.add(document.getId()); // Assuming the ingredient name is the document ID
+    }
+    return ingredients;
+  }
+
+  @Override
+  public void clearAllIngredients(String uid, String collectionName) {
+    Firestore db = FirestoreClient.getFirestore();
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    collectionRef.listDocuments().forEach(DocumentReference::delete);
   }
 
   // @Override

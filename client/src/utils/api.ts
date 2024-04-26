@@ -40,8 +40,28 @@ export async function removeIngredient(collection: string, ingredient: string) {
   return queryAPI(endpoint, queryParams);
 }
 
+export async function getAllIngredients(collection: string) {
+  const uid = getLoginCookie();
+  if (!uid) throw new Error("User ID not found.");
+
+  const endpoint = `get-ingredients/${collection}`;
+  const queryParams = { uid };
+
+  return queryAPI(endpoint, queryParams);
+}
+
 export async function clearUser(uid: string = getLoginCookie() || "") {
   return await queryAPI("clear-user", {
     uid: uid,
   });
+}
+
+export async function clearAllIngredients(collection: string) {
+  const uid = getLoginCookie();
+  if (!uid) throw new Error("User ID not found.");
+
+  const endpoint = `clear-ingredients/${collection}`;
+  const queryParams = { uid };
+
+  return queryAPI(endpoint, queryParams);
 }

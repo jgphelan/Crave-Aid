@@ -1,32 +1,32 @@
 package edu.brown.cs.student.main.server.ingredientHandlers;
 
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
+import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class RemoveIngredientHandler implements Route {
+public class GetAllIngredientsHandler implements Route {
   private FirebaseUtilities firebaseUtilities;
 
-  public RemoveIngredientHandler(FirebaseUtilities firebaseUtilities) {
+  public GetAllIngredientsHandler(FirebaseUtilities firebaseUtilities) {
     this.firebaseUtilities = firebaseUtilities;
   }
 
   @Override
   public Object handle(Request req, Response res) {
     String uid = req.queryParams("uid");
-    String ingredient = req.queryParams("ingredient");
     String collection = req.queryParams("collection");
 
-    if (uid == null || ingredient == null || collection == null) {
+    if (uid == null || collection == null) {
       res.status(400);
       return Utils.toMoshiJson(Map.of("status", "failure", "message", "Missing parameters"));
     }
 
     try {
-      firebaseUtilities.removeIngredient(uid, collection, ingredient);
-      return Utils.toMoshiJson(Map.of("status", "success"));
+      List<String> ingredients = firebaseUtilities.getAllIngredients(uid, collection);
+      return Utils.toMoshiJson(Map.of("status", "success", "data", ingredients));
     } catch (Exception e) {
       res.status(500);
       return Utils.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));

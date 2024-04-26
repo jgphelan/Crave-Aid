@@ -6,26 +6,25 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class RemoveIngredientHandler implements Route {
+public class ClearIngredientsHandler implements Route {
   private FirebaseUtilities firebaseUtilities;
 
-  public RemoveIngredientHandler(FirebaseUtilities firebaseUtilities) {
+  public ClearIngredientsHandler(FirebaseUtilities firebaseUtilities) {
     this.firebaseUtilities = firebaseUtilities;
   }
 
   @Override
   public Object handle(Request req, Response res) {
     String uid = req.queryParams("uid");
-    String ingredient = req.queryParams("ingredient");
     String collection = req.queryParams("collection");
 
-    if (uid == null || ingredient == null || collection == null) {
+    if (uid == null || collection == null) {
       res.status(400);
       return Utils.toMoshiJson(Map.of("status", "failure", "message", "Missing parameters"));
     }
 
     try {
-      firebaseUtilities.removeIngredient(uid, collection, ingredient);
+      firebaseUtilities.clearAllIngredients(uid, collection);
       return Utils.toMoshiJson(Map.of("status", "success"));
     } catch (Exception e) {
       res.status(500);
