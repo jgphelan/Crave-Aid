@@ -3,7 +3,6 @@ import React from "react";
 const Pantry: React.FC = () => {
   return (
     <div>
-      <h1>Pantry Page</h1>
       <div className="search-box">
         <div className="row">
           <input

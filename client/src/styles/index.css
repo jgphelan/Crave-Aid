@@ -5,46 +5,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
-font-family: 'Poppins', sans-serif;
+* {
+  font-family: "Poppins", sans-serif;
 }
 
 .button-container {
-  background-color: white;
+  background-color: #d9d9d9;
   width: fit-content;
   border-radius: 20px;
   margin: auto;
 }
 
-.google-login-button{
-  
+.google-login-button {
+}
+
+.input-box{
+  text-align: center;
+  margin: auto;
 }
 
 .active-button {
-  background-color: #ba3a39;
+  background-color: #bc4749;
   color: white;
   border-radius: 20px;
-  padding: 20px;
-  font-size: 25px;
+  padding: 15px;
+  font-size: 20px;
   width: 200px;
   border-color: transparent;
 }
 
 .inactive-button {
-  background-color: white;
-  color: #ba3a39;
+  background-color: #d9d9d9;
+  color: #bc4749;
   border-radius: 20px;
-  padding: 20px;
-  font-size: 25px;
+  padding: 15px;
+  font-size: 20px;
   width: 200px;
   border-color: transparent;
 }
 
 .search-box {
   background-color: white;
-  width: 600px;
-  margin: 200px auto 0;
-  border-radius: 5px;
+  width: 800px;
+  margin: 40px auto 0;
+  border-radius: 10px;
 }
 
 .row {
@@ -56,8 +60,9 @@ input {
   flex: 1;
   height: 50px;
   background: transparent;
+  text-align: center;
   border: 0;
   outline: 0;
-  font-size: 18px;
+  font-size: 28px;
   color: #333;
 }
