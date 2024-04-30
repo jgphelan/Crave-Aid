@@ -65,9 +65,6 @@ const Pantry: React.FC = () => {
             placeholder="Search ingredients to add to your pantry"
             autoComplete="off"
           />
-          <button>
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
         </div>
         <div className="result-box" id="result-box">
           <ul>

@@ -92,6 +92,7 @@ input {
   margin: 0;
   max-height: 160px; /* Adjust the maximum height as needed */
   overflow-y: auto; /* Enable vertical scrolling */
+  justify-content: center; /* Align items horizontally */
 }
 
 .result-box ul li {
@@ -102,8 +103,8 @@ input {
   cursor: pointer;
   margin: 0px;
   display: flex; /* Add flexbox display */
-  justify-content: space-between; /* Align items horizontally */
   align-items: center; /* Align items vertically */
+  justify-content: center; /* Align items horizontally */
 }
 
 .result-box ul li:hover {
@@ -113,6 +114,7 @@ input {
 .result-box ul li .text {
   flex: 1; /* Allow the text to take up remaining space */
   text-align: center; /* Center the text */
+  margin-left: 35px;
 }
 
 .result-box ul li .fa-solid {
@@ -150,4 +152,15 @@ input {
 .pantry-items table tr:last-child td {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.recipes-box {
+  background-color: white;
+  margin-top: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
+
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 400px;
 }
