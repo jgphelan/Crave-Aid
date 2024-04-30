@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import IngredientLoader from "./IngredientLoader";
 
 // Search bar and autofill code adapted from here: www.youtube.com/watch?v=pdyFf1ugVfk
 const Pantry: React.FC = () => {
@@ -7,12 +8,15 @@ const Pantry: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // State for selected items
 
   //Function to autofill search bar with ingredients based off user typing
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchTerm(value);
     if (value.length > 0) {
       // REPLACE WITH INGREDIENTS DATA
-      const filteredSuggestions = ["Apple", "Banana", "Orange", "Mango"].filter(
+      const ingredients_list = await IngredientLoader.loadIngredients(
+        "client/Selected_Ingredients_List.txt"
+      );
+      const filteredSuggestions = ingredients_list.filter(
         (suggestion) => suggestion.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
