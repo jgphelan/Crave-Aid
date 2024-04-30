@@ -1,4 +1,4 @@
- package edu.brown.cs.student.main.server.favoriteWordHandlers.parseFilterHelpers;
+ package edu.brown.cs.student.main.server.parseFilterHelpers;
 
  import com.squareup.moshi.JsonAdapter;
  import com.squareup.moshi.Moshi;
@@ -6,7 +6,6 @@
  import java.net.HttpURLConnection;
  import java.net.URL;
  import java.net.URLConnection;
- import java.util.*;
  import okio.Buffer;
 
  public class MealDBData {
@@ -29,27 +28,6 @@
      return result;
    }
 
-   private static GridResponse resolveGridCoordinates(String[] ingredientList)
-       throws MealDBDataSourceException {
-     try {
-       String ingredients = combineStringsByComma(ingredientList);
-       URL requestURL = new URL("https", "themealdb.com", "/points/" + ingredients);
-       HttpURLConnection clientConnection = connect(requestURL);
-       Moshi moshi = new Moshi.Builder().build();
-
-       // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
-       JsonAdapter<GridResponse> adapter = moshi.adapter(GridResponse.class).nonNull();
-       // NOTE: important! pattern for handling the input stream
-       GridResponse body =
-           adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
-       clientConnection.disconnect();
-       if (body == null || body.properties() == null || body.properties().gridId() == null)
-         throw new MealDBDataSourceException("Malformed response from NWS");
-       return body;
-     } catch (IOException e) {
-       throw new MealDBDataSourceException(e.getMessage());
-     }
-   }
 
    /**
     * Private helper method; throws IOException so different callers can handle differently if
@@ -116,7 +94,6 @@
 
    //       // NOTE WELL: THE TYPES GIVEN HERE WOULD VARY ANYTIME THE RESPONSE TYPE VARIES
    //       JsonAdapter<ForecastResponse> adapter =
- moshi.adapter(ForecastResponse.class).nonNull();
 
    //       ForecastResponse body =
    //           adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
@@ -127,7 +104,6 @@
 
    //       // Validity checks for response
    //       if (body == null || body.properties() == null || body.properties().temperature() ==
- null)
    //         throw new MealDBDataSourceException("Malformed response from NWS");
    //       if (body.properties().temperature().values().isEmpty())
    //         throw new MealDBDataSourceException("Could not obtain temperature data from NWS");
@@ -157,7 +133,6 @@
    //       String updateTime, ForecastResponseTemperature temperature) {}
 
    //   public record ForecastResponseTemperature(String uom, List<ForecastResponseTempValue>
- values)
    // {}
 
    //   public record ForecastResponseTempValue(String validTime, double value) {}
