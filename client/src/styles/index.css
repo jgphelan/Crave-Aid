@@ -125,6 +125,7 @@ input {
 }
 
 .pantry-items {
+  max-height: 415px; /* Adjust the maximum height as needed */
   margin-top: 20px;
   text-align: center;
 }
@@ -159,8 +160,20 @@ input {
   margin-top: 50px;
   margin-left: 100px;
   margin-right: 100px;
-
   padding: 20px;
   overflow-y: auto;
   max-height: 400px;
+}
+
+.recipes-header {
+  font-size: 22px;
+  text-align: center;
+  color: #386641;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.recipes-table tr {
+  border-width: 10px;
+  border-color: #333;
 }
