@@ -21,7 +21,8 @@ public class GetAllIngredientsHandler implements Route {
 
     if (uid == null || collection == null) {
       res.status(400);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", "Missing parameters"));
+      return Utils.toMoshiJson(
+          Map.of("status", "failure", "message", "Missing parameters" + uid + " + " + collection));
     }
 
     try {

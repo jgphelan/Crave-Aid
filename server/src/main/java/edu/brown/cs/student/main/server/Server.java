@@ -47,13 +47,10 @@ public class Server {
       return;
     }
 
-    Spark.get(
-        "/add-ingredient/:collection/:ingredient", new AddIngredientHandler(firebase_utility));
-    Spark.get(
-        "/remove-ingredient/:collection/:ingredient",
-        new RemoveIngredientHandler(firebase_utility));
-    Spark.get("/get-ingredients/:collection", new GetAllIngredientsHandler(firebase_utility));
-    Spark.get("/clear-ingredients/:collection", new ClearIngredientsHandler(firebase_utility));
+    Spark.get("/add-ingredient", new AddIngredientHandler(firebase_utility));
+    Spark.get("/remove-ingredient", new RemoveIngredientHandler(firebase_utility));
+    Spark.get("/get-ingredients", new GetAllIngredientsHandler(firebase_utility));
+    Spark.get("/clear-ingredients", new ClearIngredientsHandler(firebase_utility));
 
     // Add similar routes for removing, getting, and clearing ingredients
 

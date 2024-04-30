@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import IngredientLoader from "./IngredientLoader";
+import React, { useEffect, useState } from "react";
+import { IngredientsHolder } from "./IngredientHolder";
+import {
+  addIngredient,
+  getAllIngredients,
+  removeIngredient,
+} from "../utils/api";
 
 // Search bar and autofill code adapted from here: www.youtube.com/watch?v=pdyFf1ugVfk
 const Pantry: React.FC = () => {
@@ -7,16 +12,32 @@ const Pantry: React.FC = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // State for selected items
 
+  useEffect(() => {
+    console.log("loadAllIngredients()");
+    loadAllIngredients();
+  }, []);
+
+  // Function to fetch all ingredients from the 'pantry' collection
+  const loadAllIngredients = async () => {
+    try {
+          const ingredients = await getAllIngredients("pantry");
+          console.log(ingredients);
+          if (ingredients) {
+            setSelectedItems(ingredients.data);
+          }
+    } catch (error) {
+          console.error("Failed to load ingredients:", error);
+    }
+  };
+
   //Function to autofill search bar with ingredients based off user typing
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchTerm(value);
     if (value.length > 0) {
       // REPLACE WITH INGREDIENTS DATA
-      const ingredients_list = await IngredientLoader.loadIngredients(
-        "client/Selected_Ingredients_List.txt"
-      );
-      const filteredSuggestions = ingredients_list.filter(
+      // console.log(IngredientsHolder.ingredient_list);
+      const filteredSuggestions = IngredientsHolder.ingredient_list.filter(
         (suggestion) => suggestion.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
@@ -26,14 +47,26 @@ const Pantry: React.FC = () => {
   };
 
   //Function to handle adding an item to the pantry if it is clicked
-  const handleClick = (suggestion: string) => {
+  const handleClick = async (suggestion: string) => {
     if (selectedItems.includes(suggestion)) {
       //If the ingredient is already in pantry, remove it
-      const updatedItems = selectedItems.filter((item) => item !== suggestion);
-      setSelectedItems(updatedItems);
+      try {
+        await removeIngredient("pantry", suggestion);
+        const updatedItems = selectedItems.filter(
+          (item) => item !== suggestion
+        );
+        setSelectedItems(updatedItems);
+      } catch (error) {
+        console.error("Failed to remove ingredient:", error);
+      }
     } else {
       // Otherwise, add the item to selectedItems
-      setSelectedItems([...selectedItems, suggestion]);
+      try {
+        await addIngredient("pantry", suggestion);
+        setSelectedItems([...selectedItems, suggestion]);
+      } catch (error) {
+        console.error("Failed to add ingredient:", error);
+      }
     }
     // Clear the search term and suggestions after selecting
     setSearchTerm("");
@@ -41,11 +74,16 @@ const Pantry: React.FC = () => {
   };
 
   //Function to remove item from pantry if clicked
-  const handleItemClick = (index: number) => {
-    const updatedItems = [...selectedItems];
-    updatedItems.splice(index, 1);
-    setSelectedItems(updatedItems);
-    console.log("Updated items:", updatedItems);
+  const handleItemClick = async (index: number) => {
+    const itemToRemove = selectedItems[index];
+    try {
+      await removeIngredient("pantry", itemToRemove);
+      const updatedItems = [...selectedItems];
+      updatedItems.splice(index, 1);
+      setSelectedItems(updatedItems);
+    } catch (error) {
+      console.error("Failed to remove ingredient:", error);
+    }
   };
 
   //Helper function to chunk array into arrays of size n (for layout of table)
