@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.favoriteWordHandlers.parseFilterHelpers;
+package edu.brown.cs.student.main.server.parseFilterHelpers;
 
 import java.io.IOException;
 import java.net.URI;
