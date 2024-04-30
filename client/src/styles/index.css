@@ -19,7 +19,7 @@ body {
 .google-login-button {
 }
 
-.input-box{
+.input-box {
   text-align: center;
   margin: auto;
 }
@@ -32,6 +32,19 @@ body {
   font-size: 20px;
   width: 200px;
   border-color: transparent;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+button .fa-solid {
+  width: 25px;
+  color: #555;
+  font-size: 28px;
+  cursor: pointer;
 }
 
 .inactive-button {
@@ -56,13 +69,80 @@ body {
   align-items: center;
   padding: 10px 20px;
 }
+
 input {
   flex: 1;
-  height: 50px;
+  height: auto;
   background: transparent;
   text-align: center;
+  padding: 10px;
   border: 0;
   outline: 0;
   font-size: 28px;
   color: #333;
+}
+
+.result-box ul {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  max-height: 160px; /* Adjust the maximum height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.result-box ul li {
+  background-color: #f0f0f0;
+  border-top: 2px solid #dbdbdb;
+  list-style: none;
+  padding: 12px 10px;
+  cursor: pointer;
+  margin: 0px;
+  display: flex; /* Add flexbox display */
+  justify-content: space-between; /* Align items horizontally */
+  align-items: center; /* Align items vertically */
+}
+
+.result-box ul li:hover {
+  background: #e9f3ff;
+}
+
+.result-box ul li .text {
+  flex: 1; /* Allow the text to take up remaining space */
+  text-align: center; /* Center the text */
+}
+
+.result-box ul li .fa-solid {
+  color: #555;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.selected-items {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.selected-items table {
+  width: 800px; /* Adjust width as needed */
+  margin: auto;
+  border-collapse: separate;
+  border-spacing: 10px; /* Adjust spacing between cells */
+  table-layout: fixed;
+}
+
+.selected-items table td {
+  background-color: #a7c957;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selected-items table tr:first-child td {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.selected-items table tr:last-child td {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
