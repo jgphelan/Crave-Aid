@@ -31,28 +31,30 @@ public class Caller {
 
     return idMeals;
   }
-    public String[][] parse(String json) {
-        // Convert JSON string to JSON Object
-        JSONObject obj = new JSONObject(json);
-        JSONArray meals = obj.getJSONArray("meals");
+    public String[][] parse(String idArr) {
+        // get idMeal from each recipe
+        String[][] mealInfo = new String[idArr.length()][27];
+        for (int i = 0; i < idArr.length(); i++) {
+            //get the json from the query to pertaining mealId
+            String json = ""; //TODO should be different json per meal
+            //turn Json into object
+            JSONObject obj = new JSONObject(json);
+            //follow previous shape to enter singular object with all info
+            JSONArray meals = obj.getJSONArray("meals");
+            JSONObject meal = meals.getJSONObject(0);
 
-        // get idMeal from each recipie
-        String[][] idMeals = new String[meals.length()][20];
-
-        for (int i = 0; i < meals.length(); i++) {
-            JSONObject meal = meals.getJSONObject(i);
             for (int j = 0; j <20 ; j++) {
-                idMeals[i][j] = meal.getString("strIngredient" + j );
+                mealInfo[i][j] = meal.getString("strIngredient" + j );
             }
-            idMeals[i][20] = meal.getString("idMeal" ); //id
-            idMeals[i][21] = meal.getString("strMeal" ); // name
-            idMeals[i][22] = meal.getString("strCategory" ); //category
-            idMeals[i][23] = meal.getString("strSource" ); // website link
-            idMeals[i][24] = meal.getString("strYoutube" ); // youtube
-            idMeals[i][25] = meal.getString("strMealThumb" ); // thumbnail
-            idMeals[i][26] = meal.getString("strInstructions" ); // instructions
+            mealInfo[i][20] = meal.getString("idMeal" ); //id
+            mealInfo[i][21] = meal.getString("strMeal" ); // name
+            mealInfo[i][22] = meal.getString("strCategory" ); //category
+            mealInfo[i][23] = meal.getString("strSource" ); // website link
+            mealInfo[i][24] = meal.getString("strYoutube" ); // youtube
+            mealInfo[i][25] = meal.getString("strMealThumb" ); // thumbnail
+            mealInfo[i][26] = meal.getString("strInstructions" ); // instructions
         }
-        return idMeals;
+        return mealInfo;
     }
 
 //    public String [] filter(String[][] full){
