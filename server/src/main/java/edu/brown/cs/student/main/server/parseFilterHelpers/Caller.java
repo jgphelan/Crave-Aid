@@ -17,21 +17,21 @@ public class Caller {
    * "strMeal": "Chicken Ham and Leek Pie", "strMealThumb":
    * "https://www.themealdb.com/images/media/meals/xrrtss1511555269.jpg", "idMeal": "52875" } ] }
    */
-  public String[] parseMealIDFromMulti(String json) {
-    // Convert JSON string to JSON Object
-    JSONObject obj = new JSONObject(json);
-    JSONArray meals = obj.getJSONArray("meals");
+      public String[] parseMealIDFromMulti(String json) {
+        // Convert JSON string to JSON Object
+        JSONObject obj = new JSONObject(json);
+        JSONArray meals = obj.getJSONArray("meals");
 
-      // get idMeal from each recipie
-    String[] idMeals = new String[meals.length()];
+          // get idMeal from each recipie
+        String[] idMeals = new String[meals.length()];
 
-    for (int i = 0; i < meals.length(); i++) {
-            JSONObject meal = meals.getJSONObject(i);
-            idMeals[i] = meal.getString("idMeal");
+        for (int i = 0; i < meals.length(); i++) {
+                JSONObject meal = meals.getJSONObject(i);
+                idMeals[i] = meal.getString("idMeal");
+        }
+
+        return idMeals;
     }
-
-    return idMeals;
-  }
     public String[][] parse(String idArr) {
         // get idMeal from each recipe
         String[][] mealInfo = new String[idArr.length()][27];
@@ -40,7 +40,7 @@ public class Caller {
             String json = ""; //TODO should be different json per meal
             //turn Json into object
             JSONObject obj = new JSONObject(json);
-            //follow previous shape to enter singular object with all info
+            //follow previous shape to enter singular object with all info, may be redundant but for function sake
             JSONArray meals = obj.getJSONArray("meals");
             JSONObject meal = meals.getJSONObject(0);
 
