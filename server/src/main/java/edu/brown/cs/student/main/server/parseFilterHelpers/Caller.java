@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Caller {
+
   // Takes in a json containing multiple items fitting multi ingredient choice
   /**
    * shape: { "meals": [ { "strMeal": "Chicken Fajita Mac and Cheese", "strMealThumb":
