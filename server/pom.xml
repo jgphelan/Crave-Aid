@@ -24,6 +24,25 @@
 
   <dependencies>
 
+    <!-- manual dependency for JSON parsing -->
+
+  <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20210307</version>
+</dependency>
+
+
+
+
+
+
+
+
+
+
+
+
     <!--
            We use Moshi for serialization/deserialization of JSON data.
            Moshi 1.13.0 was released in December 2021.
