@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server.storage;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -28,7 +28,7 @@ public class FirebaseUtilities implements StorageInterface {
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
     String workingDirectory = System.getProperty("user.dir");
     Path firebaseConfigPath =
-        Paths.get(workingDirectory, "src", "server", "main", "resources", "firebase_config.json");
+        Paths.get(workingDirectory, "server", "src", "main", "resources", "firebase_config.json");
     // ^-- if your /resources/firebase_config.json exists but is not found,
     // try printing workingDirectory and messing around with this path.
 
@@ -43,56 +43,88 @@ public class FirebaseUtilities implements StorageInterface {
   }
 
   @Override
-  public void addPin(String uid, String pinId, double lat, double lng) {
+  public void addIngredient(String uid, String collectionName, String ingredientName) {
     Firestore db = FirestoreClient.getFirestore();
-    DocumentReference userRef = db.collection("users").document(uid);
-    CollectionReference pins = userRef.collection("pins");
-    Map<String, Object> pinData = Map.of("lat", lat, "lng", lng);
-    pins.document(pinId).set(pinData);
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    Map<String, Object> ingredientData = Map.of("name", ingredientName);
+    collectionRef.document(ingredientName).set(ingredientData);
   }
 
   @Override
-  public List<Map<String, Object>> getPins(String uid) {
-    List<Map<String, Object>> pinsList = new ArrayList<>();
+  public void removeIngredient(String uid, String collectionName, String ingredientName) {
     Firestore db = FirestoreClient.getFirestore();
-    CollectionReference pins = db.collection("users").document(uid).collection("pins");
-    try {
-      pins.get()
-          .get()
-          .forEach(
-              document -> {
-                Map<String, Object> pinData = new HashMap<>();
-                pinData.put("id", document.getId());
-                pinData.putAll(document.getData());
-                pinsList.add(pinData);
-              });
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } catch (ExecutionException e) {
-      e.printStackTrace();
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    collectionRef.document(ingredientName).delete();
+  }
+
+  @Override
+  public List<String> getAllIngredients(String uid, String collectionName)
+      throws InterruptedException, ExecutionException {
+    Firestore db = FirestoreClient.getFirestore();
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    List<String> ingredients = new ArrayList<>();
+    List<QueryDocumentSnapshot> documents = collectionRef.get().get().getDocuments();
+    for (DocumentSnapshot document : documents) {
+      ingredients.add(document.getId()); // Assuming the ingredient name is the document ID
     }
-    return pinsList;
+    return ingredients;
   }
 
   @Override
-  public void clearPins(String uid) {
+  public void clearAllIngredients(String uid, String collectionName) {
     Firestore db = FirestoreClient.getFirestore();
-    CollectionReference pins = db.collection("users").document(uid).collection("pins");
-    pins.listDocuments().forEach(document -> document.delete());
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collectionName);
+    collectionRef.listDocuments().forEach(DocumentReference::delete);
   }
+
+  // @Override
+  // public void addPin(String uid, String pinId, double lat, double lng) {
+  //   Firestore db = FirestoreClient.getFirestore();
+  //   DocumentReference userRef = db.collection("users").document(uid);
+  //   CollectionReference pins = userRef.collection("pins");
+  //   Map<String, Object> pinData = Map.of("lat", lat, "lng", lng);
+  //   pins.document(pinId).set(pinData);
+  // }
+
+  // @Override
+  // public List<Map<String, Object>> getPins(String uid) {
+  //   List<Map<String, Object>> pinsList = new ArrayList<>();
+  //   Firestore db = FirestoreClient.getFirestore();
+  //   CollectionReference pins = db.collection("users").document(uid).collection("pins");
+  //   try {
+  //     pins.get()
+  //         .get()
+  //         .forEach(
+  //             document -> {
+  //               Map<String, Object> pinData = new HashMap<>();
+  //               pinData.put("id", document.getId());
+  //               pinData.putAll(document.getData());
+  //               pinsList.add(pinData);
+  //             });
+  //   } catch (InterruptedException e) {
+  //     e.printStackTrace();
+  //   } catch (ExecutionException e) {
+  //     e.printStackTrace();
+  //   }
+  //   return pinsList;
+  // }
+
+  // @Override
+  // public void clearPins(String uid) {
+  //   Firestore db = FirestoreClient.getFirestore();
+  //   CollectionReference pins = db.collection("users").document(uid).collection("pins");
+  //   pins.listDocuments().forEach(document -> document.delete());
+  // }
 
   // clears the collections inside of a specific user.
   @Override
   public void clearUser(String uid) throws IllegalArgumentException {
     if (uid == null) {
       throw new IllegalArgumentException("removeUser: uid cannot be null");
-    }
-    try {
-      // removes all pins data for user 'uid'
-      clearPins(uid);
-    } catch (Exception e) {
-      System.err.println("Error removing user : " + uid);
-      System.err.println(e.getMessage());
     }
   }
 

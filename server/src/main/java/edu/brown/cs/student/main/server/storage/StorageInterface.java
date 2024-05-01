@@ -11,11 +11,20 @@ public interface StorageInterface {
   List<Map<String, Object>> getCollection(String uid, String collection_id)
       throws InterruptedException, ExecutionException;
 
-  void addPin(String uid, String pinId, double lat, double lng);
+  // void addPin(String uid, String pinId, double lat, double lng);
 
-  List<Map<String, Object>> getPins(String uid);
+  // List<Map<String, Object>> getPins(String uid);
 
-  void clearPins(String uid);
+  // void clearPins(String uid);
 
   void clearUser(String uid) throws InterruptedException;
+
+  void addIngredient(String uid, String collectionName, String ingredientName);
+
+  public void removeIngredient(String uid, String collectionName, String ingredientName);
+
+  public List<String> getAllIngredients(String uid, String collectionName)
+      throws InterruptedException, ExecutionException;
+
+  public void clearAllIngredients(String uid, String collectionName);
 }
