@@ -26,22 +26,11 @@
 
     <!-- manual dependency for JSON parsing -->
 
-  <dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-</dependency>
-
-
-
-
-
-
-
-
-
-
-
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
+    </dependency>
 
     <!--
            We use Moshi for serialization/deserialization of JSON data.

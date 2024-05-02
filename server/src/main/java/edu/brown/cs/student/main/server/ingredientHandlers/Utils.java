@@ -3,7 +3,6 @@ package edu.brown.cs.student.main.server.ingredientHandlers;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,12 +30,11 @@ public class Utils {
     return adapter.toJson(data);
   }
 
-
   public static String fullApiResponseString(String urlStr) throws IOException {
     URL url = new URL(urlStr);
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     connection.setRequestMethod("GET");
-    connection.setRequestProperty("Accept", "application/json"); //from documentation
+    connection.setRequestProperty("Accept", "application/json"); // from documentation
 
     if (connection.getResponseCode() != 200) {
       throw new RuntimeException("Failed : HTTP error code : " + connection.getResponseCode());
@@ -51,7 +49,4 @@ public class Utils {
     connection.disconnect();
     return response.toString();
   }
-
-
 }
-
