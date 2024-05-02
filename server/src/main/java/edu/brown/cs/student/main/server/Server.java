@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.server.externalHandlers.RecipeCallHandler;
 import edu.brown.cs.student.main.server.handlers.ClearUserHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.AddIngredientHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.ClearIngredientsHandler;
@@ -51,6 +52,8 @@ public class Server {
     Spark.get("/remove-ingredient", new RemoveIngredientHandler(firebase_utility));
     Spark.get("/get-ingredients", new GetAllIngredientsHandler(firebase_utility));
     Spark.get("/clear-ingredients", new ClearIngredientsHandler(firebase_utility));
+    Spark.get("/get-Recipes", new RecipeCallHandler());
+
 
     // Add similar routes for removing, getting, and clearing ingredients
 
