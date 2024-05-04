@@ -10,6 +10,7 @@ const Recipes: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
   const [showResults, setShowResults] = useState<boolean>(false);
+  const [modal, setModal] = useState(false);
 
   const handleSearch = () => {
     // For now, let's mock some recipe data
@@ -35,6 +36,19 @@ const Recipes: React.FC = () => {
     setShowResults(true);
   };
 
+  const populatedPopup = "hi";
+
+  //Modal from here: https://www.youtube.com/watch?v=9DwGahSqcEc
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+
   return (
     <div>
       <div className="search-box">
@@ -53,6 +67,7 @@ const Recipes: React.FC = () => {
           </button>
         </div>
       </div>
+
       {showResults && (
         <div className="recipes-box" id="recipes-box">
           <div className="recipes-header">
@@ -67,10 +82,29 @@ const Recipes: React.FC = () => {
                   </td>
                   <td>{recipe.name}</td>
                   <td>{recipe.description}</td>
+                  <td>
+                    {" "}
+                    <button className="modal-button" onClick={toggleModal}>
+                      {" "}
+                      See more{" "}
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+      {modal && (
+        <div className="modal">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content">
+            <h2>Hello Modal</h2>
+            <p>{populatedPopup}</p>
+            <button className="close-modal" onClick={toggleModal}>
+              CLOSE
+            </button>
+          </div>
         </div>
       )}
     </div>
