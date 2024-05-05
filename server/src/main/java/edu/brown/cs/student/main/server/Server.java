@@ -8,10 +8,6 @@ import edu.brown.cs.student.main.server.ingredientHandlers.AddIngredientHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.ClearIngredientsHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.GetAllIngredientsHandler;
 import edu.brown.cs.student.main.server.ingredientHandlers.RemoveIngredientHandler;
-import edu.brown.cs.student.main.server.redlining.redliningData.CachedRedlining;
-import edu.brown.cs.student.main.server.redlining.redliningData.RedliningDataHandler;
-import edu.brown.cs.student.main.server.redlining.redliningData.RedliningReal;
-import edu.brown.cs.student.main.server.redlining.redliningSearch.RedliningSearchHandler;
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.io.IOException;
 import spark.Spark;
@@ -32,13 +28,6 @@ public class Server {
           response.header("Access-Control-Allow-Methods", "*");
         });
 
-    // REDLINING DATA
-    RedliningReal redliningSrc = new RedliningReal();
-    Spark.get("/redliningData", new RedliningDataHandler(new CachedRedlining(redliningSrc, 20, 2)));
-
-    // REDLINING SEARCHING
-    Spark.get("/redliningSearch", new RedliningSearchHandler(redliningSrc));
-
     // PINS
     FirebaseUtilities firebase_utility = null;
     try {
@@ -52,7 +41,7 @@ public class Server {
     Spark.get("/remove-ingredient", new RemoveIngredientHandler(firebase_utility));
     Spark.get("/get-ingredients", new GetAllIngredientsHandler(firebase_utility));
     Spark.get("/clear-ingredients", new ClearIngredientsHandler(firebase_utility));
-    Spark.get("/get-Recipes", new RecipeCallHandler());
+    Spark.get("/get-recipes", new RecipeCallHandler());
 
     // Add similar routes for removing, getting, and clearing ingredients
 
