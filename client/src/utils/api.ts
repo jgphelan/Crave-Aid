@@ -61,3 +61,14 @@ export async function clearAllIngredients(collection: string) {
 
   return queryAPI(endpoint, queryParams);
 }
+
+export async function getRecipes(ingredients: string[]) {
+  const uid = getLoginCookie();
+  if (!uid) throw new Error("User ID not found.");
+
+  const ingredientsString = ingredients.map(encodeURIComponent).join(",");
+  const endpoint = "get-recipes";
+  const queryParams = { uid, ingredients: ingredientsString };
+
+  return queryAPI(endpoint, queryParams);
+}

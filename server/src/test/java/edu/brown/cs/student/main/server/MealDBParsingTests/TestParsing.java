@@ -5,21 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Types;
 import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
-import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
-
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.json.JSONException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import spark.utils.Assert;
-
 
 public class TestParsing {
 
@@ -27,11 +18,14 @@ public class TestParsing {
 
   String jsonPath = "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByIDEx";
 
-  String catJSONPath = "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/CategoryExJSON";
+  String catJSONPath =
+      "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/CategoryExJSON";
 
-  String jsonPath2 = "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByMultiIngredient";
+  String jsonPath2 =
+      "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByMultiIngredient";
 
-  String nullJSONPath = "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByMultiInvalid";
+  String nullJSONPath =
+      "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByMultiInvalid";
 
   @Test
   public void testParseMealIDFromMultiBasic() throws IOException {
@@ -63,7 +57,7 @@ public class TestParsing {
     assertNotNull(mealIDs, "Meal IDs should not be null");
     assertTrue(mealIDs.length > 0, "There should be at least one meal ID");
 
-    assertEquals(mealIDs.length,5, "Meals IDs should be equal to 5");
+    assertEquals(mealIDs.length, 5, "Meals IDs should be equal to 5");
 
     assertEquals(mealIDs[2], "53011", "3rd Meal ID should match actual");
   }
@@ -76,12 +70,13 @@ public class TestParsing {
     // Instantiate Caller
     Caller caller = new Caller();
 
-    assertThrows(JSONException.class, () -> {
-      // This should throw JSONException because "meals" is not a JSONArray
-      caller.parseMealIDFromMulti(jsonContent);
-    });
+    assertThrows(
+        JSONException.class,
+        () -> {
+          // This should throw JSONException because "meals" is not a JSONArray
+          caller.parseMealIDFromMulti(jsonContent);
+        });
   }
-
 
   @Test
   public void testParseCategory() throws IOException {
@@ -89,10 +84,5 @@ public class TestParsing {
 
     // Instantiate Caller
     Caller caller = new Caller();
-
-
   }
-
-
-
 }
