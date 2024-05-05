@@ -53,7 +53,7 @@ public class Caller {
       int sharedCount = 0;
 
       for (int j = 0; j < 20; j++) {
-        String ing = meal.getString("strIngredient" + j);
+        String ing = meal.getString("strIngredient" + (j + 1));
         mealInfo[i][j] = ing;
 
         // get total ingredient count
