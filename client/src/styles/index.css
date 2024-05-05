@@ -90,7 +90,7 @@ input {
   width: 100%;
   padding: 0;
   margin: 0;
-  max-height: 160px; /* Adjust the maximum height as needed */
+  max-height: 180px; /* Adjust the maximum height as needed */
   overflow-y: auto; /* Enable vertical scrolling */
   justify-content: center; /* Align items horizontally */
 }
