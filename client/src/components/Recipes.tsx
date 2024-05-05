@@ -151,6 +151,24 @@ const Recipes: React.FC = () => {
           </ul>
         </div>
       </div>
+      <div className="pantry-items">
+        <table>
+          <tbody>
+            {chunkArray(selectedItems, 4).map((chunk, rowIndex) => (
+              <tr key={rowIndex}>
+                {chunk.map((item, columnIndex) => (
+                  <td
+                    key={columnIndex}
+                    onClick={() => handleItemClick(rowIndex * 4 + columnIndex)}
+                  >
+                    {item}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {showResults && (
         <div className="recipes-box" id="recipes-box">
