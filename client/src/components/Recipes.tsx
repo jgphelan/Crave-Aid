@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import { IngredientsHolder } from "./IngredientHolder";
-import {
-  addIngredient,
-  getAllIngredients,
-  removeIngredient,
-} from "../utils/api";
 
 interface Recipe {
   name: string;
@@ -17,7 +12,6 @@ const Recipes: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // State for selected items
-
   const [showResults, setShowResults] = useState<boolean>(false);
   const [modal, setModal] = useState(false);
 
