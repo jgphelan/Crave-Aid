@@ -9,9 +9,10 @@ import spark.Route;
 
 public class RecipeCallHandler implements Route {
 
+  @SuppressWarnings("unused")
   @Override
   public Object handle(Request req, Response res) {
-    String ingredients = req.queryParams("ingredients"); // TODO
+    String ingredients = req.queryParams("ingredients");
     // splits comma delineated ingredient list
     String[] ingredientArray = ingredients.split(",");
 
@@ -21,7 +22,7 @@ public class RecipeCallHandler implements Route {
     }
 
     try {
-      // TODO GET THE INITIAL JSON FROM CALL TO ALL RECIPES AND PASS THAT JSON INTO
+      // GET THE INITIAL JSON FROM CALL TO ALL RECIPES AND PASS THAT JSON INTO
       // parseMealIDFromMulti
       String url = "https://www.themealdb.com/api/json/v2/9973533/filter.php?i=" + ingredients;
       String json = Utils.fullApiResponseString(url);

@@ -37,7 +37,6 @@ public class Caller {
     for (int i = 0; i < idArr.length; i++) {
       // get the json from the query to pertaining mealId
 
-      // TODO check validity and try catch IOException
       String url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + idArr[i];
       String json = Utils.fullApiResponseString(url);
 
@@ -49,16 +48,16 @@ public class Caller {
       JSONObject meal = meals.getJSONObject(0);
 
       // loops over each ingredient field and adds it to corresponding array space
-      int emptyCount = 0;
+      int emptyCount = 20;
       int sharedCount = 0;
 
       for (int j = 0; j < 20; j++) {
-        String ing = meal.getString("strIngredient" + j);
+        String ing = meal.getString("strIngredient" + (j + 1)).trim();
         mealInfo[i][j] = ing;
 
         // get total ingredient count
         if (ing.isEmpty()) {
-          emptyCount++;
+          emptyCount--;
         }
 
         for (String x : ingredients) {
