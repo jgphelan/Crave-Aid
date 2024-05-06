@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IngredientsHolder } from "./IngredientHolder";
+import { getRecipes } from "../utils/api"
 
 interface Recipe {
   name: string;
@@ -15,7 +16,7 @@ const Recipes: React.FC = () => {
   const [showResults, setShowResults] = useState<boolean>(false);
   const [modal, setModal] = useState(false);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     // For now, let's mock some recipe data
     const mockRecipes: Recipe[] = [
       {
@@ -32,6 +33,12 @@ const Recipes: React.FC = () => {
       },
       // Add more mock recipes as needed
     ];
+
+    
+
+    const recipeJSON = getRecipes(selectedItems);
+
+    console.log(recipeJSON);
 
     // Here you would perform the actual search based on searchTerm
     // For now, let's just use the mock data

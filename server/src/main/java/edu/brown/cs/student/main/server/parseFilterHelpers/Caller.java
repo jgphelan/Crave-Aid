@@ -42,7 +42,8 @@ public class Caller {
 
       // turn Json into object
       JSONObject obj = new JSONObject(json);
-      // follow previous shape to enter singular object with all info, may be redundant for
+      // follow previous shape to enter singular object with all info, may be
+      // redundant for
       // functions sake
       JSONArray meals = obj.getJSONArray("meals");
       JSONObject meal = meals.getJSONObject(0);
