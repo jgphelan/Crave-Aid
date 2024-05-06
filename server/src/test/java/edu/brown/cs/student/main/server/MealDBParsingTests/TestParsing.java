@@ -89,7 +89,7 @@ public class TestParsing {
   @Test
   public void testParseSingle() {
     String[] idArr = {"53049"};
-    String[] ingredients = {"salt"};
+    String[] ingredients = {"Salt"};
     try {
       String[][] mealInfo = Caller.parse(idArr, ingredients);
       assertEquals(mealInfo[0][0], "Milk");

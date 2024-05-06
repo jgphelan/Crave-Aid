@@ -49,16 +49,16 @@ public class Caller {
       JSONObject meal = meals.getJSONObject(0);
 
       // loops over each ingredient field and adds it to corresponding array space
-      int emptyCount = 0;
+      int emptyCount = 20;
       int sharedCount = 0;
 
       for (int j = 0; j < 20; j++) {
-        String ing = meal.getString("strIngredient" + (j + 1));
+        String ing = meal.getString("strIngredient" + (j + 1)).trim();
         mealInfo[i][j] = ing;
 
         // get total ingredient count
         if (ing.isEmpty()) {
-          emptyCount++;
+          emptyCount--;
         }
 
         for (String x : ingredients) {
