@@ -53,7 +53,7 @@ public class Utils {
     return response.toString();
   }
 
-  public String parseRecipe(String[][] recipesData) {
+  public static String parseRecipe(String[][] recipesData) {
 
     // Convert to List of Recipe objects
     List<Recipe> recipes = new ArrayList<>();
