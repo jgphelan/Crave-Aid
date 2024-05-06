@@ -34,7 +34,6 @@ const Recipes: React.FC = () => {
       // Add more mock recipes as needed
     ];
 
-    
 
     const recipeJSON = getRecipes(selectedItems);
 
