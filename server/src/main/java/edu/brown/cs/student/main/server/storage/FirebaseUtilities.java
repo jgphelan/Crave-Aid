@@ -21,8 +21,8 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseUtilities implements StorageInterface {
 
+  @SuppressWarnings("deprecation")
   public FirebaseUtilities() throws IOException {
-    // TODO: FIRESTORE PART 0:
     // Create /resources/ folder with firebase_config.json and
     // add your admin SDK from Firebase. see:
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
@@ -138,7 +138,6 @@ public class FirebaseUtilities implements StorageInterface {
     // adds a new document 'doc_name' to colleciton 'collection_id' for user 'uid'
     // with data payload 'data'.
 
-    // TODO: FIRESTORE PART 1:
     // use the guide below to implement this handler
     // - https://firebase.google.com/docs/firestore/quickstart#add_data
 

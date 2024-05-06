@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 
 public class TestParsing {
 
-  private Caller caller;
-
   String jsonPath = "/Users/Jimmy.Phelan/academics/cs32/Crave-Aid/server/data/Mocks/SearchByIDEx";
 
   String catJSONPath =
@@ -32,11 +30,8 @@ public class TestParsing {
     // Read the JSON file content into a String
     String jsonContent = new String(Files.readAllBytes(Paths.get(jsonPath)));
 
-    // Instantiate Caller
-    Caller caller = new Caller();
-
     // Invoke the method to be tested
-    String[] mealIDs = caller.parseMealIDFromMulti(jsonContent);
+    String[] mealIDs = Caller.parseMealIDFromMulti(jsonContent);
 
     // Example assertion (adjust as necessary based on expected output)
     assertNotNull(mealIDs, "Meal IDs should not be null");
@@ -48,11 +43,8 @@ public class TestParsing {
   public void testParseMealIDFromMulti() throws IOException {
     String jsonContent = new String(Files.readAllBytes(Paths.get(nullJSONPath)));
 
-    // Instantiate Caller
-    Caller caller = new Caller();
-
     // Invoke the method to be tested
-    String[] mealIDs = caller.parseMealIDFromMulti(jsonContent);
+    String[] mealIDs = Caller.parseMealIDFromMulti(jsonContent);
 
     assertNotNull(mealIDs, "Meal IDs should not be null");
     assertTrue(mealIDs.length > 0, "There should be at least one meal ID");
@@ -67,23 +59,12 @@ public class TestParsing {
   public void testParseMealIDFromMultiOnNull() throws IOException, JSONException {
     String jsonContent = new String(Files.readAllBytes(Paths.get(nullJSONPath)));
 
-    // Instantiate Caller
-    Caller caller = new Caller();
-
     assertThrows(
         JSONException.class,
         () -> {
           // This should throw JSONException because "meals" is not a JSONArray
-          caller.parseMealIDFromMulti(jsonContent);
+          Caller.parseMealIDFromMulti(jsonContent);
         });
-  }
-
-  @Test
-  public void testParseCategory() throws IOException {
-    String jsonContent = new String(Files.readAllBytes(Paths.get(catJSONPath)));
-
-    // Instantiate Caller
-    Caller caller = new Caller();
   }
 
   @Test

@@ -37,7 +37,6 @@ public class Caller {
     for (int i = 0; i < idArr.length; i++) {
       // get the json from the query to pertaining mealId
 
-      // TODO check validity and try catch IOException
       String url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + idArr[i];
       String json = Utils.fullApiResponseString(url);
 
