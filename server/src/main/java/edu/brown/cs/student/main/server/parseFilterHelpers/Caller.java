@@ -61,7 +61,7 @@ public class Caller {
         }
 
         for (String x : ingredients) {
-          if (x.equals(ing)) {
+          if ((x.toLowerCase()).equals(ing.toLowerCase())) {
             sharedCount++;
           }
         }
