@@ -9,6 +9,7 @@ pom.xml.bak
 
 # node, vite
 node_modules/
+client/node_modules
 client/*.js
 target/
 build/
