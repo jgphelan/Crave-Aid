@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server.MealDBParsingTests;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.brown.cs.student.main.server.ingredientHandlers.Utils;
+import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
@@ -135,5 +136,17 @@ public class TestUtils {
       assertTrue(false);
     }
     assertTrue(json.equals(compare));
+  }
+
+  @Test
+  public void testParseRecipes() throws IOException {
+    String ingredients = "salt,milk,eggs,oil";
+    String[] ingredientArray = ingredients.split(",");
+    String url = "https://www.themealdb.com/api/json/v2/9973533/filter.php?i=" + ingredients;
+    String json = Utils.fullApiResponseString(url);
+    String[] idArr = Caller.parseMealIDFromMulti(json);
+    String[][] mealInfo = Caller.parse(idArr, ingredientArray);
+    String finalJson = Utils.parseRecipe(mealInfo);
+    System.out.println(finalJson);
   }
 }
