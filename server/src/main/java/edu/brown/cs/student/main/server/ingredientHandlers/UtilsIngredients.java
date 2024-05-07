@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Utils {
+public class UtilsIngredients {
 
   public static String toMoshiJson(Map<String, Object> map) {
     Moshi moshi = new Moshi.Builder().build();

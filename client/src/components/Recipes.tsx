@@ -6,6 +6,8 @@ interface Recipe {
   name: string;
   image: string;
   description: string;
+  ingredients: string[];
+  youtube: string;
 }
 
 const Recipes: React.FC = () => {
@@ -15,24 +17,25 @@ const Recipes: React.FC = () => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // State for selected items
   const [showResults, setShowResults] = useState<boolean>(false);
   const [modal, setModal] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   const handleSearch = async () => {
     // For now, let's mock some recipe data
-    const mockRecipes: Recipe[] = [
-      {
-        name: "Pasta Carbonara",
-        image: "pasta_carbonara.jpg",
-        description:
-          "A classic Italian pasta dish with eggs, cheese, and pancetta.",
-      },
-      {
-        name: "Chicken Curry",
-        image: "chicken_curry.jpg",
-        description:
-          "A flavorful Indian dish made with chicken, spices, and tomatoes.",
-      },
-      // Add more mock recipes as needed
-    ];
+    // const mockRecipes: Recipe[] = [
+    //   {
+    //     name: "Pasta Carbonara",
+    //     image: "pasta_carbonara.jpg",
+    //     description:
+    //       "A classic Italian pasta dish with eggs, cheese, and pancetta.",
+    //   },
+    //   {
+    //     name: "Chicken Curry",
+    //     image: "chicken_curry.jpg",
+    //     description:
+    //       "A flavorful Indian dish made with chicken, spices, and tomatoes.",
+    //   },
+    //   // Add more mock recipes as needed
+    // ];
 
     try {
       const response = await getRecipes(selectedItems);
@@ -45,6 +48,8 @@ const Recipes: React.FC = () => {
         name: item.name,
         image: item.thumbnail,
         description: item.instructions.substring(0, 150) + "...",
+        ingredients: Array.isArray(item.ingredients) ? item.ingredients : [],
+        youtube: item.youtube,
       }));
 
       // Here you would perform the actual search based on searchTerm
@@ -120,8 +125,9 @@ const Recipes: React.FC = () => {
   const populatedPopup = "hi";
 
   //Modal from here: https://www.youtube.com/watch?v=9DwGahSqcEc
-  const toggleModal = () => {
+  const toggleModal = (recipe: Recipe | null) => {
     setModal(!modal);
+    setSelectedRecipe(recipe); // Add this line to set the selected recipe
   };
 
   if (modal) {
@@ -190,32 +196,58 @@ const Recipes: React.FC = () => {
             <tbody>
               {searchResults.map((recipe, index) => (
                 <tr key={index}>
-                  <td>
-                    <img src={recipe.image} alt={recipe.name} />
-                  </td>
-                  <td>{recipe.name}</td>
-                  <td>{recipe.description}</td>
-                  <td>
-                    {" "}
-                    <button className="modal-button" onClick={toggleModal}>
-                      {" "}
-                      See more{" "}
+                  <hr className="line" width="75%" />
+
+                  <img
+                    className="recipe-image"
+                    src={recipe.image}
+                    alt={recipe.name}
+                  />
+
+                  <div className="centered-content">
+                    <p className="name">{recipe.name}</p>
+                    <p>You have {} ingredients needed</p>
+                    <p>You are missing {} ingredients</p>
+                    <button
+                      className="modal-button"
+                      onClick={() => toggleModal(recipe)}
+                    >
+                      See more
                     </button>
-                  </td>
+                  </div>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       )}
-      {modal && (
+      {modal && selectedRecipe && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h2>Hello Modal</h2>
-            <p>{populatedPopup}</p>
-            <button className="close-modal" onClick={toggleModal}>
-              CLOSE
+            <h2>{selectedRecipe.name}</h2>
+            <img
+              className="recipe-image2"
+              src={selectedRecipe.image}
+              alt={selectedRecipe.name}
+            />
+            <div className="ingredients-list">
+              <h3>Ingredients:</h3>
+              {selectedRecipe.ingredients
+                .filter(Boolean)
+                .map((ingredient, idx) => (
+                  <div key={idx}>
+                    {idx + 1}.{" "}
+                    {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
+                  </div>
+                ))}
+            </div>
+            <p>{selectedRecipe.description}</p>
+            <a href={selectedRecipe.youtube} target="_blank">
+              Watch the video tutorial
+            </a>
+            <button className="close-modal" onClick={() => toggleModal(null)}>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
         </div>
