@@ -192,8 +192,13 @@ input {
   max-width: 300px;
 }
 
+
+
+
 .centered-content {
   padding-right: 50px;
+  padding-top: 20px;
+  justify-content: center;
 }
 
 .recipe-image2 {
@@ -254,4 +259,8 @@ body.active-modal {
   font-size: 30px;
   color: #6a994e;
   font-weight: bold;
+}
+
+.line {
+  margin-bottom: 40px;
 }

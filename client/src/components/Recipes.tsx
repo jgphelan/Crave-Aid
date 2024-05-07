@@ -196,6 +196,8 @@ const Recipes: React.FC = () => {
             <tbody>
               {searchResults.map((recipe, index) => (
                 <tr key={index}>
+                  <hr className="line" width="75%" />
+
                   <img
                     className="recipe-image"
                     src={recipe.image}
