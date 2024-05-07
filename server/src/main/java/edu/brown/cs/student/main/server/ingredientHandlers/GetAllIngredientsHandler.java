@@ -21,16 +21,16 @@ public class GetAllIngredientsHandler implements Route {
 
     if (uid == null || collection == null) {
       res.status(400);
-      return Utils.toMoshiJson(
+      return UtilsIngredients.toMoshiJson(
           Map.of("status", "failure", "message", "Missing parameters" + uid + " + " + collection));
     }
 
     try {
       List<String> ingredients = firebaseUtilities.getAllIngredients(uid, collection);
-      return Utils.toMoshiJson(Map.of("status", "success", "data", ingredients));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "success", "data", ingredients));
     } catch (Exception e) {
       res.status(500);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
     }
   }
 }

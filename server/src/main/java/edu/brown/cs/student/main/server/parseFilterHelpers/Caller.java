@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.server.parseFilterHelpers;
 
-import edu.brown.cs.student.main.server.ingredientHandlers.Utils;
+import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
 import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public class Caller {
       // get the json from the query to pertaining mealId
 
       String url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + idArr[i];
-      String json = Utils.fullApiResponseString(url);
+      String json = UtilsIngredients.fullApiResponseString(url);
 
       // turn Json into object
       JSONObject obj = new JSONObject(json);

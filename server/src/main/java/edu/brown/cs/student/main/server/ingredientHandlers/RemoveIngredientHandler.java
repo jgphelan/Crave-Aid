@@ -21,15 +21,16 @@ public class RemoveIngredientHandler implements Route {
 
     if (uid == null || ingredient == null || collection == null) {
       res.status(400);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", "Missing parameters"));
+      return UtilsIngredients.toMoshiJson(
+          Map.of("status", "failure", "message", "Missing parameters"));
     }
 
     try {
       firebaseUtilities.removeIngredient(uid, collection, ingredient);
-      return Utils.toMoshiJson(Map.of("status", "success"));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "success"));
     } catch (Exception e) {
       res.status(500);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
     }
   }
 }

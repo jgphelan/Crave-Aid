@@ -155,42 +155,62 @@ input {
   border-bottom-right-radius: 10px;
 }
 
+.recipes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.centered-text {
+  padding-right: 100px;
+}
+
+.recipes-table tr {
+  position: relative;
+}
+
 .recipes-box {
   background-color: white;
-  margin-top: 50px;
-  margin-left: 100px;
-  margin-right: 100px;
   padding: 20px;
   overflow-y: auto;
   max-height: 400px;
+  width: 80%;
+  margin: 20px auto; /* Center the box horizontally */
 }
 
 .recipes-header {
-  font-size: 22px;
+  font-size: 40px;
   text-align: center;
   color: #386641;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.recipes-table tr {
-  border-width: 10px;
-  border-color: #333;
+.recipe-image {
+  float: left;
+  padding-left: 100px;
+  padding-bottom: 40px;
+  max-width: 300px;
 }
 
-.modal-button {
-  cursor: pointer;
+.centered-content {
+  padding-right: 50px;
+}
+
+.recipe-image2 {
+  max-width: 200px;
 }
 
 body.active-modal {
   overflow-y: hidden;
 }
 
-.btn-modal {
+.modal-button {
+  font-size: 22px;
+  border-radius: 10px;
+  background-color: #bc4749;
   padding: 10px 20px;
-  display: block;
-  margin: 100px auto 0;
-  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .modal,
@@ -207,17 +227,20 @@ body.active-modal {
 .overlay {
   background: rgba(49, 49, 49, 0.8);
 }
+
 .modal-content {
-  position: absolute;
-  top: 40%;
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
   background: #f1f1f1;
   padding: 14px 28px;
   border-radius: 3px;
-  min-width: 400px;
-  max-width: 900px;
+  width: 400px;
+  max-height: 80vh; /* Set maximum height to 80% of viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 5px solid #bc4749; /* Add border */
 }
 
 .close-modal {
@@ -225,4 +248,10 @@ body.active-modal {
   top: 10px;
   right: 10px;
   padding: 5px 7px;
+}
+
+.name {
+  font-size: 30px;
+  color: #6a994e;
+  font-weight: bold;
 }

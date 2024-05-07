@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.server.externalHandlers;
 
-import edu.brown.cs.student.main.server.ingredientHandlers.Utils;
+import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
 import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
 import java.util.Map;
 import spark.Request;
@@ -18,27 +18,28 @@ public class RecipeCallHandler implements Route {
 
     if (ingredients == null) {
       res.status(400);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", "Missing parameters"));
+      return UtilsIngredients.toMoshiJson(
+          Map.of("status", "failure", "message", "Missing parameters"));
     }
 
     try {
       // GET THE INITIAL JSON FROM CALL TO ALL RECIPES AND PASS THAT JSON INTO
       // parseMealIDFromMulti
       String url = "https://www.themealdb.com/api/json/v2/9973533/filter.php?i=" + ingredients;
-      String json = Utils.fullApiResponseString(url);
+      String json = UtilsIngredients.fullApiResponseString(url);
 
       String[] idArr = Caller.parseMealIDFromMulti(json);
       String[][] infoArr = Caller.parse(idArr, ingredientArray);
 
       // Serialize the 2D array
-      String jsonData = Utils.toJson2DArray(infoArr); // TODO switch to new strat
-      String recipeListJson = Utils.parseRecipe(infoArr);
+      String jsonData = UtilsIngredients.toJson2DArray(infoArr); // TODO switch to new strat
+      String recipeListJson = UtilsIngredients.parseRecipe(infoArr);
 
       // TODO confirm correct
-      return Utils.toMoshiJson(Map.of("status", "success", "data", recipeListJson));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "success", "data", recipeListJson));
     } catch (Exception e) {
       res.status(500);
-      return Utils.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
+      return UtilsIngredients.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
     }
   }
 }
