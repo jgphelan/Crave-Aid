@@ -53,28 +53,63 @@ public class Caller {
       int sharedCount = 0;
 
       for (int j = 0; j < 20; j++) {
-        String ing = meal.getString("strIngredient" + (j + 1)).trim();
-        mealInfo[i][j] = ing;
 
-        // get total ingredient count
-        if (ing.isEmpty()) {
-          emptyCount--;
-        }
+        try {
+          String ing = meal.getString("strIngredient" + (j + 1)).trim();
 
-        for (String x : ingredients) {
-          if ((x.toLowerCase()).equals(ing.toLowerCase())) {
-            sharedCount++;
+          mealInfo[i][j] = ing;
+
+          // get total ingredient count
+          if (ing.isEmpty()) {
+            emptyCount--;
           }
+
+          for (String x : ingredients) {
+            if ((x.toLowerCase()).equals(ing.toLowerCase())) {
+              sharedCount++;
+            }
+          }
+        } catch (Exception e) {
+          mealInfo[i][j] = "";
+          emptyCount--;
         }
       }
       // pass individual recipe info to 2d array in respective row
-      mealInfo[i][20] = meal.getString("idMeal"); // id
-      mealInfo[i][21] = meal.getString("strMeal"); // name
-      mealInfo[i][22] = meal.getString("strCategory"); // category
-      mealInfo[i][23] = meal.getString("strSource"); // website link
-      mealInfo[i][24] = meal.getString("strYoutube"); // youtube
-      mealInfo[i][25] = meal.getString("strMealThumb"); // thumbnail
-      mealInfo[i][26] = meal.getString("strInstructions"); // instructions
+      try {
+        mealInfo[i][20] = meal.getString("idMeal"); // id
+      } catch (Exception e) {
+        mealInfo[i][20] = "";
+      }
+      try {
+        mealInfo[i][21] = meal.getString("strMeal"); // name
+      } catch (Exception e) {
+        mealInfo[i][21] = "";
+      }
+      try {
+        mealInfo[i][22] = meal.getString("strCategory"); // category
+      } catch (Exception e) {
+        mealInfo[i][22] = "";
+      }
+      try {
+        mealInfo[i][23] = meal.getString("strSource"); // website link
+      } catch (Exception e) {
+        mealInfo[i][23] = "";
+      }
+      try {
+        mealInfo[i][24] = meal.getString("strYoutube"); // youtube
+      } catch (Exception e) {
+        mealInfo[i][24] = "";
+      }
+      try {
+        mealInfo[i][25] = meal.getString("strMealThumb"); // thumbnail
+      } catch (Exception e) {
+        mealInfo[i][25] = "";
+      }
+      try {
+        mealInfo[i][26] = meal.getString("strInstructions"); // instructions
+      } catch (Exception e) {
+        mealInfo[i][26] = "";
+      }
       mealInfo[i][27] = Integer.toString(emptyCount); // number of total ingredients in recipe;
       mealInfo[i][28] =
           Integer.toString(sharedCount); // number of ingredients in recipe and search;
