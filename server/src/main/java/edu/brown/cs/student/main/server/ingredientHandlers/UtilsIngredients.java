@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class Utils {
 
@@ -93,13 +91,10 @@ public class Utils {
       i++;
     }
 
-
     // Setup Moshi
     Moshi moshi = new Moshi.Builder().build();
     Type recipeListType = Types.newParameterizedType(List.class, Recipe.class);
     JsonAdapter<List<Recipe>> jsonAdapter = moshi.adapter(recipeListType);
-
-
 
     // Convert to JSON
     return jsonAdapter.toJson(recipes);
