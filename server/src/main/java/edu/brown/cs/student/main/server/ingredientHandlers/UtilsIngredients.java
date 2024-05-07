@@ -11,8 +11,11 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Utils {
 
@@ -57,6 +60,9 @@ public class Utils {
 
     // Convert to List of Recipe objects
     List<Recipe> recipes = new ArrayList<>();
+    HashMap<String, Recipe> recipesMap = new HashMap<String, Recipe>();
+
+    int i = 0;
     for (String[] recipeData : recipesData) {
 
       String[] ingredients = java.util.Arrays.copyOfRange(recipeData, 0, 20);
@@ -69,7 +75,7 @@ public class Utils {
       String instructions = recipeData[26];
       String totalIngredients = recipeData[27];
       String sharedIngredients = recipeData[28];
-      recipes.add(
+      Recipe rec =
           new Recipe(
               ingredients,
               id,
@@ -80,13 +86,20 @@ public class Utils {
               thumbnail,
               instructions,
               totalIngredients,
-              sharedIngredients));
+              sharedIngredients);
+      recipes.add(rec);
+
+      recipesMap.put("Recipe" + i, rec);
+      i++;
     }
+
 
     // Setup Moshi
     Moshi moshi = new Moshi.Builder().build();
     Type recipeListType = Types.newParameterizedType(List.class, Recipe.class);
     JsonAdapter<List<Recipe>> jsonAdapter = moshi.adapter(recipeListType);
+
+
 
     // Convert to JSON
     return jsonAdapter.toJson(recipes);
