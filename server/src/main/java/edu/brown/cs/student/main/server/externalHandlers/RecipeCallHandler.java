@@ -31,18 +31,11 @@ public class RecipeCallHandler implements Route {
       String[][] infoArr = Caller.parse(idArr, ingredientArray);
 
       // Serialize the 2D array
-      String jsonData = Utils.toJson2DArray(infoArr);
-
-      //            String idmeal =infoArr[i][20];
-      //            String strMeal= infoArr[i][21];
-      //            String strCategory= infoArr[i][22];
-      //            String strSource=infoArr[i][23];
-      //            String strYoutube=infoArr[i][24];
-      //            String strMealThumb=infoArr[i][25];
-      //            String strInstructions=infoArr[i][26];
+      String jsonData = Utils.toJson2DArray(infoArr); // TODO switch to new strat
+      String recipeListJson = Utils.parseRecipe(infoArr);
 
       // TODO confirm correct
-      return Utils.toMoshiJson(Map.of("status", "success", "data", jsonData));
+      return Utils.toMoshiJson(Map.of("status", "success", "data", recipeListJson));
     } catch (Exception e) {
       res.status(500);
       return Utils.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));

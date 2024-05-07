@@ -243,7 +243,8 @@ public class TestParsing {
       String[] idArr = Caller.parseMealIDFromMulti(json);
       String[][] mealInfo = Caller.parse(idArr, ingredientArray);
       flattened = Utils.toJson2DArray(mealInfo);
-      System.out.print(flattened);
+
+      System.out.print("Hello \n\n\n" + flattened + "\n\n\n");
       String compare =
           "[[\"Milk\",\"Oil\",\"Eggs\",\"Flour\",\"Baking Powder\",\"Salt\",\"Unsalted Butter\",\"Sugar\",\"Peanut Butter\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"53049\",\"Apam balik\",\"Dessert\",\"https://www.nyonyacooking.com/recipes/apam-balik~SJ5WuvsDf9WQ\",\"https://www.youtube.com/watch?v=6R8ffRRJcrg\",\"https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg\",\"Mix milk, oil and egg together. Sift flour, baking powder and salt into the mixture. Stir well until all ingredients are combined evenly.\\r\\n"
               + //
@@ -276,6 +277,5 @@ public class TestParsing {
     } catch (IOException e) {
       assertTrue(false);
     }
-    System.out.println(flattened);
   }
 }

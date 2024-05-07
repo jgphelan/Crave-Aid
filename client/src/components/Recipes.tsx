@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IngredientsHolder } from "./IngredientHolder";
-import { getRecipes } from "../utils/api"
+import { getRecipes } from "../utils/api";
 
 interface Recipe {
   name: string;
@@ -34,16 +34,26 @@ const Recipes: React.FC = () => {
       // Add more mock recipes as needed
     ];
 
-    
+    try {
+      const response = await getRecipes(selectedItems);
 
-    const recipeJSON = getRecipes(selectedItems);
+      const jdata = JSON.parse(response.data);
 
-    console.log(recipeJSON);
+      console.log(jdata);
 
-    // Here you would perform the actual search based on searchTerm
-    // For now, let's just use the mock data
-    setSearchResults(mockRecipes);
-    setShowResults(true);
+      const recipes = jdata.map((item: any) => ({
+        name: item.name,
+        image: item.thumbnail,
+        description: item.instructions.substring(0, 150) + "...",
+      }));
+
+      // Here you would perform the actual search based on searchTerm
+      // For now, let's just use the mock data
+      setSearchResults(recipes);
+      setShowResults(true);
+    } catch (error) {
+      console.log("Failed to fetch recipes", error);
+    }
   };
 
   //Function to autofill search bar with ingredients based off user typing
