@@ -54,7 +54,8 @@ public class RecipeCallHandler implements Route {
       String json = UtilsIngredients.fullApiResponseString(url);
 
       String[] idArr = Caller.parseMealIDFromMulti(json);
-      String[][] infoArr = Caller.parse(uid, idArr, ingredientArray, firebaseUtilities);
+      // List<String> listIngredients = firebaseUtilities.getAllIngredients(uid, "pantry");
+      String[][] infoArr = Caller.parse(uid, idArr, ingredientArray, null);
 
       // Serialize the 2D array
       // String jsonData = UtilsIngredients.toJson2DArray(infoArr); // alt strategy

@@ -124,6 +124,7 @@ public class UtilsIngredients {
     for (String[] recipeData : recipesData) {
       // Create a new Recipe object with the recipe data since each column is an attribute of the recipe constructor
       String[] ingredients = java.util.Arrays.copyOfRange(recipeData, 0, 20);
+      String[] measurements = java.util.Arrays.copyOfRange(recipeData, 29, 49);
       String id = recipeData[20];
       String name = recipeData[21];
       String category = recipeData[22];
@@ -136,6 +137,7 @@ public class UtilsIngredients {
       Recipe rec =
           new Recipe(
               ingredients,
+              measurements,
               id,
               name,
               category,

@@ -1,6 +1,9 @@
 package edu.brown.cs.student.main.server.ingredientHandlers;
 
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
@@ -32,6 +35,11 @@ public class AddIngredientHandler implements Route {
     // Get the uid, ingredient, and collection from the request
     String uid = req.queryParams("uid");
     String ingredient = req.queryParams("ingredient");
+    try {
+      ingredient = URLDecoder.decode(ingredient, StandardCharsets.UTF_8.toString());
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
     String collection = req.queryParams("collection");
 
     // Check if any of the parameters are missing

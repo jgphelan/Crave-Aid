@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.server.parseFilterHelpers;
 
 import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
-import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,11 +87,11 @@ public class Caller {
    * @throws IOException If an error occurs while getting the ingredients
    */
   public static String[][] parse(
-      String uid, String[] idArr, String[] ingredients, FirebaseUtilities firebaseUtilities)
+      String uid, String[] idArr, String[] ingredients, List<String> ingredientList)
       throws IOException {
 
     // get idMeal from each recipe
-    String[][] mealInfo = new String[idArr.length][29];
+    String[][] mealInfo = new String[idArr.length][49];
     for (int i = 0; i < idArr.length; i++) {
       // get the json from the query to pertaining mealId
 
@@ -119,24 +118,21 @@ public class Caller {
 
           // add ingredient to array
           mealInfo[i][j] = ing;
-
+          String measure = meal.getString("strMeasure" + (j + 1)).trim();
+          mealInfo[i][j + 29] = measure;
           // get total ingredient count
           if (ing.isEmpty()) {
             // if ingredient is empty, decrement empty count
             emptyCount--;
           }
-
-          // check if ingredient is in pantry
-          if (isFoundInPantry(ing.toLowerCase(), uid, firebaseUtilities)) {
-            // increment shared count
-            sharedCount++;
-          }
-        // getString is required and requires a string but API response sometimes
-        // returns null or otherwise so this is a catch all for that specific case  
+          // if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
+          //   sharedCount++;
+          // }
         } catch (Exception e) {
           e.printStackTrace();
           // if ingredient is empty, decrement empty count and add empty string in place
           mealInfo[i][j] = "";
+          mealInfo[i][j + 29] = "";
           emptyCount--;
         }
       }
@@ -199,14 +195,10 @@ public class Caller {
    * @return True if the ingredient is found in the user's pantry, false otherwise
    * @throws Exception If an error occurs while getting the ingredients
    */
-  public static boolean isFoundInPantry(
-      String ingredient, String uid, FirebaseUtilities firebaseUtilities) throws Exception {
-    // get all ingredients from pantry using uid and firebaseUtilities
-    List<String> ingredients = firebaseUtilities.getAllIngredients(uid, "pantry");
-    // convert all ingredients to lowercase
+  public static boolean isFoundInPantry(String ingredient, String uid, List<String> ingredientList)
+      throws Exception {
     List<String> lowerCaseIngredients =
-        ingredients.stream().map(String::toLowerCase).collect(Collectors.toList());
-    // return true if ingredient is found in pantry, false otherwise
+        ingredientList.stream().map(String::toLowerCase).collect(Collectors.toList());
     return binarySearch(lowerCaseIngredients, ingredient.toLowerCase());
   }
 

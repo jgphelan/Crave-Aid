@@ -8,6 +8,7 @@ public class Recipe {
 
   // Fields
   private String[] ingredients;
+  private String[] measurements;
   private String id;
   private String name;
   private String category;
@@ -21,6 +22,7 @@ public class Recipe {
   // Constructors
   public Recipe(
       String[] ingredients,
+      String[] measurements,
       String id,
       String name,
       String category,
@@ -31,6 +33,7 @@ public class Recipe {
       String totalIngredients,
       String sharedIngredients) {
     this.ingredients = ingredients;
+    this.measurements = measurements; // set measurements in constructor
     this.id = id;
     this.name = name;
     this.category = category;
@@ -45,6 +48,10 @@ public class Recipe {
   // Getters
   public String[] getIngredients() {
     return ingredients;
+  }
+
+  public String[] getMeasurements() {
+    return measurements;
   }
 
   public String getId() {

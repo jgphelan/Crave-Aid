@@ -73,7 +73,7 @@ public class TestParsing {
     String[] idArr = {"53049"};
     String[] ingredients = {"Salt"};
     try {
-      String[][] mealInfo = Caller.parse(null, idArr, ingredients);
+      String[][] mealInfo = Caller.parse(null, idArr, ingredients, null);
       assertEquals(mealInfo[0][0], "Milk");
       assertEquals(mealInfo[0][1], "Oil");
       assertEquals(mealInfo[0][2], "Eggs");
@@ -108,7 +108,7 @@ public class TestParsing {
     String[] idArr = {"53049", "53016"};
     String[] ingredients = {"Salt", "Milk"};
     try {
-      String[][] mealInfo = Caller.parse(null, idArr, ingredients);
+      String[][] mealInfo = Caller.parse(null, idArr, ingredients, null);
       assertEquals(mealInfo[0][0], "Milk");
       assertEquals(mealInfo[0][1], "Oil");
       assertEquals(mealInfo[0][2], "Eggs");
@@ -175,7 +175,7 @@ public class TestParsing {
       String url = "https://www.themealdb.com/api/json/v2/9973533/filter.php?i=" + ingredients;
       String json = UtilsIngredients.fullApiResponseString(url);
       String[] idArr = Caller.parseMealIDFromMulti(json);
-      String[][] mealInfo = Caller.parse(null, idArr, ingredientArray);
+      String[][] mealInfo = Caller.parse(null, idArr, ingredientArray, null);
 
       assertEquals(mealInfo[0][0], "Milk");
       assertEquals(mealInfo[0][1], "Oil");
@@ -241,7 +241,7 @@ public class TestParsing {
       String url = "https://www.themealdb.com/api/json/v2/9973533/filter.php?i=" + ingredients;
       String json = UtilsIngredients.fullApiResponseString(url);
       String[] idArr = Caller.parseMealIDFromMulti(json);
-      String[][] mealInfo = Caller.parse(null, idArr, ingredientArray);
+      String[][] mealInfo = Caller.parse(null, idArr, ingredientArray, null);
       flattened = UtilsIngredients.toJson2DArray(mealInfo);
 
       System.out.print("Hello \n\n\n" + flattened + "\n\n\n");

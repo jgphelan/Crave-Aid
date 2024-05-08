@@ -7,6 +7,7 @@ interface Recipe {
   image: string;
   instructions: string;
   ingredients: string[];
+  measurements: string[];
   youtube: string;
 }
 
@@ -52,6 +53,7 @@ const Recipes: React.FC = () => {
         image: item.thumbnail,
         instructions: item.instructions,
         ingredients: Array.isArray(item.ingredients) ? item.ingredients : [],
+        measurements: Array.isArray(item.measurements) ? item.measurements : [],
         youtube: item.youtube,
       }));
 
@@ -260,14 +262,25 @@ const Recipes: React.FC = () => {
               className="ingredients-list"
             >
               <h3>Ingredients:</h3>
-              {selectedRecipe.ingredients
-                .filter(Boolean)
-                .map((ingredient, idx) => (
-                  <div key={idx}>
-                    {idx + 1}.{" "}
-                    {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
-                  </div>
-                ))}
+              <table className="ingredients-table">
+                <tbody>
+                  {selectedRecipe.ingredients
+                    .filter(Boolean)
+                    .map((ingredient, idx) => (
+                      <tr key={idx}>
+                        <td
+                          style={{ textAlign: "right", paddingRight: "10px" }}
+                        >
+                          {ingredient.charAt(0).toUpperCase() +
+                            ingredient.slice(1)}
+                        </td>
+                        <td style={{ textAlign: "left", paddingLeft: "10px" }}>
+                          {selectedRecipe.measurements[idx]}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
             {selectedRecipe.instructions && (
               <div
