@@ -26,9 +26,9 @@ public class RecipeCallHandler implements Route {
    * backend. It takes in a string of ingredients delimited by commas and returns
    * a list of recipes and their respective info as a json
    *
-   * @param req - the request object
-   * @param res - the response object
-   * @return - a json object containing the status of the call and the data
+   * @param req the request object to handle
+   * @param res the response object to handle
+   * @return a json string containing the status of the call and the recipe data
    */
 
   @Override
@@ -37,6 +37,7 @@ public class RecipeCallHandler implements Route {
     String uid = req.queryParams("uid");
     System.out.println(uid);
 
+    // check if the parameters are missing
     if (ingredients == null) {
       res.status(400);
       return UtilsIngredients.toMoshiJson(
@@ -59,8 +60,10 @@ public class RecipeCallHandler implements Route {
       // String jsonData = UtilsIngredients.toJson2DArray(infoArr); // alt strategy
       String recipeListJson = UtilsIngredients.parseRecipe(infoArr);
 
+      // return the json string with the status and the recipe data
       return UtilsIngredients.toMoshiJson(Map.of("status", "success", "data", recipeListJson));
     } catch (Exception e) {
+      // return a failure message if the call fails
       res.status(500);
       return UtilsIngredients.toMoshiJson(Map.of("status", "failure", "message", e.getMessage()));
     }

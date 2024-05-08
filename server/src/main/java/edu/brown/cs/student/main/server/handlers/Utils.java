@@ -8,12 +8,11 @@ import java.util.Map;
 
 public class Utils {
 
-  /*
+  /**
    * Converts a map to a JSON string using Moshi.
    *
    * @param map The map to convert to JSON.
    * @return A JSON string representation of the map.
-   * @throws Exception If there is an error converting the map to JSON.
    */
   public static String toMoshiJson(Map<String, Object> map) {
     Moshi moshi = new Moshi.Builder().build();

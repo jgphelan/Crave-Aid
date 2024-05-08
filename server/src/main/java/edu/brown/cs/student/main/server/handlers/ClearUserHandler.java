@@ -28,12 +28,14 @@ public class ClearUserHandler implements Route {
    *
    * @param request The request object providing information about the HTTP request
    * @param response The response object providing functionality for modifying the response
-   * @return The content to be set in the response
+   * @return The content to be set in the response as failure or success
    */
   @Override
   public Object handle(Request request, Response response) {
+    // a map to store the response
     Map<String, Object> responseMap = new HashMap<>();
     try {
+      // Get the uid from the request
       String uid = request.queryParams("uid");
 
       // Remove the user from the database
@@ -41,6 +43,8 @@ public class ClearUserHandler implements Route {
       this.storageHandler.clearUser(uid);
 
       responseMap.put("response_type", "success");
+
+      // If an error occurs, return a failure message
     } catch (Exception e) {
       // error likely occurred in the storage handler
       e.printStackTrace();
