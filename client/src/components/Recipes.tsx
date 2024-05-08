@@ -9,6 +9,8 @@ interface Recipe {
   ingredients: string[];
   measurements: string[];
   youtube: string;
+  sharedIngredients: number;
+  totalIngredients: number;
 }
 
 const Recipes: React.FC = () => {
@@ -55,6 +57,8 @@ const Recipes: React.FC = () => {
         ingredients: Array.isArray(item.ingredients) ? item.ingredients : [],
         measurements: Array.isArray(item.measurements) ? item.measurements : [],
         youtube: item.youtube,
+        sharedIngredients: item.sharedIngredients,
+        totalIngredients: item.totalIngredients,
       }));
 
       // Here you would perform the actual search based on searchTerm
@@ -228,8 +232,16 @@ const Recipes: React.FC = () => {
                       >
                         {recipe.name}
                       </p>
-                      <p>You have {} ingredients needed</p>
-                      <p>You are missing {} ingredients</p>
+                      <p>
+                        You have {recipe.sharedIngredients} of{" "}
+                        {recipe.totalIngredients} ingredients needed
+                      </p>
+                      <p>
+                        You are missing{" "}
+                        {recipe.totalIngredients -
+                          recipe.sharedIngredients}{" "}
+                        ingredients
+                      </p>
                       <button
                         aria-label="modal-button"
                         aria-description="Button to see more about the recipe"

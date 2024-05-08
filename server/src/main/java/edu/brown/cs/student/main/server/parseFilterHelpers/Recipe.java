@@ -16,8 +16,8 @@ public class Recipe {
   private String youtube;
   private String thumbnail;
   private String instructions;
-  private String totalIngredients;
-  private String sharedIngredients;
+  private int totalIngredients;
+  private int sharedIngredients;
 
   // Constructors
   public Recipe(
@@ -30,8 +30,8 @@ public class Recipe {
       String youtube,
       String thumbnail,
       String instructions,
-      String totalIngredients,
-      String sharedIngredients) {
+      int totalIngredients,
+      int sharedIngredients) {
     this.ingredients = ingredients;
     this.measurements = measurements; // set measurements in constructor
     this.id = id;
@@ -82,11 +82,11 @@ public class Recipe {
     return instructions;
   }
 
-  public String getTotalIngredients() {
+  public int getTotalIngredients() {
     return totalIngredients;
   }
 
-  public String getSharedIngredients() {
+  public int getSharedIngredients() {
     return sharedIngredients;
   }
 }

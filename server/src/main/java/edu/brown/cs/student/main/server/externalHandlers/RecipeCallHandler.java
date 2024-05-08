@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server.externalHandlers;
 import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
 import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
+import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
@@ -35,7 +36,7 @@ public class RecipeCallHandler implements Route {
   public Object handle(Request req, Response res) {
     String ingredients = req.queryParams("ingredients");
     String uid = req.queryParams("uid");
-    System.out.println(uid);
+    String[] ingredientArray = ingredients.split(",");
 
     // check if the parameters are missing
     if (ingredients == null) {
@@ -54,8 +55,14 @@ public class RecipeCallHandler implements Route {
       String json = UtilsIngredients.fullApiResponseString(url);
 
       String[] idArr = Caller.parseMealIDFromMulti(json);
-      // List<String> listIngredients = firebaseUtilities.getAllIngredients(uid, "pantry");
-      String[][] infoArr = Caller.parse(uid, idArr, ingredientArray, null);
+      List<String> listIngredients = firebaseUtilities.getAllIngredients(uid, "pantry");
+      // System.out.println(listIngredients);
+      // List<String> listIngredients = new ArrayList();
+      // listIngredients.add("Black Pepper");
+      // listIngredients.add("Chicken");
+      // listIngredients.add("Ginger Cordial");
+      // listIngredients.add("Green Onions");
+      String[][] infoArr = Caller.parse(uid, idArr, ingredientArray, listIngredients);
 
       // Serialize the 2D array
       // String jsonData = UtilsIngredients.toJson2DArray(infoArr); // alt strategy

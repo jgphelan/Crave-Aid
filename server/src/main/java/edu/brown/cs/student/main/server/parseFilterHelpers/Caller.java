@@ -118,12 +118,10 @@ public class Caller {
             // if ingredient is empty, decrement empty count
             emptyCount--;
           }
-          // if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
-          //   sharedCount++;
-          // }
+          if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
+            sharedCount++;
+          }
         } catch (Exception e) {
-          e.printStackTrace();
-          // if ingredient is empty, decrement empty count and add empty string in place
           mealInfo[i][j] = "";
           mealInfo[i][j + 29] = "";
           emptyCount--;
@@ -207,8 +205,6 @@ public class Caller {
   private static boolean binarySearch(List<String> sortedIngredients, String target) {
     int low = 0;
     int high = sortedIngredients.size() - 1;
-
-    // binary search for ingredient in pantry list of ingredients
     while (low <= high) {
       // calculate midpoint
       int mid = low + (high - low) / 2;
@@ -223,6 +219,9 @@ public class Caller {
         // if mid val is greater than target, set high to mid - 1
         high = mid - 1;
       } else {
+        return true;
+      }
+    }
         // if mid val is equal to target, return true
         return true;
       }
