@@ -74,8 +74,8 @@ public class UtilsIngredients {
       String youtube = recipeData[24];
       String thumbnail = recipeData[25];
       String instructions = recipeData[26];
-      String totalIngredients = recipeData[27];
-      String sharedIngredients = recipeData[28];
+      int totalIngredients = Integer.parseInt(recipeData[27]);
+      int sharedIngredients = Integer.parseInt(recipeData[28]);
       Recipe rec =
           new Recipe(
               ingredients,
@@ -94,6 +94,15 @@ public class UtilsIngredients {
       recipesMap.put("Recipe" + i, rec);
       i++;
     }
+
+    recipes.sort(
+        (r1, r2) -> {
+          if (r1.getSharedIngredients() != r2.getSharedIngredients()) {
+            return Integer.compare(r2.getSharedIngredients(), r1.getSharedIngredients());
+          } else {
+            return Integer.compare(r1.getTotalIngredients(), r2.getTotalIngredients());
+          }
+        });
 
     // Setup Moshi
     Moshi moshi = new Moshi.Builder().build();

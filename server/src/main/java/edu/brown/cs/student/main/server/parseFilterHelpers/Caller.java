@@ -68,11 +68,11 @@ public class Caller {
             emptyCount--;
           }
 
-          // if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
-          //   sharedCount++;
-          // }
+          if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
+            sharedCount++;
+          }
         } catch (Exception e) {
-          e.printStackTrace();
+          // e.printStackTrace();
           mealInfo[i][j] = "";
           mealInfo[i][j + 29] = "";
           emptyCount--;
@@ -131,7 +131,8 @@ public class Caller {
   private static boolean binarySearch(List<String> sortedIngredients, String target) {
     int low = 0;
     int high = sortedIngredients.size() - 1;
-
+    // System.out.println(sortedIngredients);
+    // System.out.println(target);
     while (low <= high) {
       int mid = low + (high - low) / 2;
       String midVal = sortedIngredients.get(mid);
@@ -141,10 +142,11 @@ public class Caller {
       } else if (midVal.compareTo(target) > 0) {
         high = mid - 1;
       } else {
+        // System.out.println("Result ===============> true");
         return true;
       }
     }
-
+    // System.out.println("Result ===> false");
     return false;
   }
 }
