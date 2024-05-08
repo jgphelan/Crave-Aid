@@ -19,8 +19,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * FirebaseUtilities holds all methods responsible for interactions with Firebase. 
+ * Implements StorageInterface. Class is specifically responsible for adding, 
+ * removing, and getting ingredients from Firebase.
+ */
 public class FirebaseUtilities implements StorageInterface {
 
+  /**
+   * Constructor for FirebaseUtilities. Initializes FirebaseApp with FirebaseOptions.
+   * @throws IOException if FirebaseOptions cannot be initialized.
+   */
   @SuppressWarnings("deprecation")
   public FirebaseUtilities() throws IOException {
     // Create /resources/ folder with firebase_config.json and
@@ -42,6 +51,12 @@ public class FirebaseUtilities implements StorageInterface {
     FirebaseApp.initializeApp(options);
   }
 
+  /**
+   * Adds an ingredient to a user's collection in Firebase.
+   * @param uid user's unique id
+   * @param collectionName name of collection to add ingredient to
+   * @param ingredientName name of ingredient to add
+   */
   @Override
   public void addIngredient(String uid, String collectionName, String ingredientName) {
     Firestore db = FirestoreClient.getFirestore();
@@ -51,6 +66,12 @@ public class FirebaseUtilities implements StorageInterface {
     collectionRef.document(ingredientName).set(ingredientData);
   }
 
+  /**
+   * Removes an ingredient from a user's collection in Firebase.
+   * @param uid user's unique id
+   * @param collectionName name of collection to remove ingredient from
+   * @param ingredientName name of ingredient to remove
+   */
   @Override
   public void removeIngredient(String uid, String collectionName, String ingredientName) {
     Firestore db = FirestoreClient.getFirestore();
@@ -59,6 +80,14 @@ public class FirebaseUtilities implements StorageInterface {
     collectionRef.document(ingredientName).delete();
   }
 
+  /**
+   * Gets all ingredients from a user's collection in Firebase.
+   * @param uid user's unique id
+   * @param collectionName name of collection to get ingredients from
+   * @return list of all ingredients in collection
+   * @throws InterruptedException if thread is interrupted
+   * @throws ExecutionException if execution fails
+   */
   @Override
   public List<String> getAllIngredients(String uid, String collectionName)
       throws InterruptedException, ExecutionException {
@@ -73,6 +102,11 @@ public class FirebaseUtilities implements StorageInterface {
     return ingredients;
   }
 
+  /**
+   * Clears all ingredients from a user's collection in Firebase.
+   * @param uid user's unique id
+   * @param collectionName name of collection to clear ingredients from
+   */
   @Override
   public void clearAllIngredients(String uid, String collectionName) {
     Firestore db = FirestoreClient.getFirestore();
@@ -81,46 +115,11 @@ public class FirebaseUtilities implements StorageInterface {
     collectionRef.listDocuments().forEach(DocumentReference::delete);
   }
 
-  // @Override
-  // public void addPin(String uid, String pinId, double lat, double lng) {
-  //   Firestore db = FirestoreClient.getFirestore();
-  //   DocumentReference userRef = db.collection("users").document(uid);
-  //   CollectionReference pins = userRef.collection("pins");
-  //   Map<String, Object> pinData = Map.of("lat", lat, "lng", lng);
-  //   pins.document(pinId).set(pinData);
-  // }
-
-  // @Override
-  // public List<Map<String, Object>> getPins(String uid) {
-  //   List<Map<String, Object>> pinsList = new ArrayList<>();
-  //   Firestore db = FirestoreClient.getFirestore();
-  //   CollectionReference pins = db.collection("users").document(uid).collection("pins");
-  //   try {
-  //     pins.get()
-  //         .get()
-  //         .forEach(
-  //             document -> {
-  //               Map<String, Object> pinData = new HashMap<>();
-  //               pinData.put("id", document.getId());
-  //               pinData.putAll(document.getData());
-  //               pinsList.add(pinData);
-  //             });
-  //   } catch (InterruptedException e) {
-  //     e.printStackTrace();
-  //   } catch (ExecutionException e) {
-  //     e.printStackTrace();
-  //   }
-  //   return pinsList;
-  // }
-
-  // @Override
-  // public void clearPins(String uid) {
-  //   Firestore db = FirestoreClient.getFirestore();
-  //   CollectionReference pins = db.collection("users").document(uid).collection("pins");
-  //   pins.listDocuments().forEach(document -> document.delete());
-  // }
-
-  // clears the collections inside of a specific user.
+  /**
+   * clears the collections inside of a specific user.
+   * @param uid user's unique id
+   * @throws IllegalArgumentException if uid is null
+   */
   @Override
   public void clearUser(String uid) throws IllegalArgumentException {
     if (uid == null) {
@@ -128,6 +127,14 @@ public class FirebaseUtilities implements StorageInterface {
     }
   }
 
+  /**
+   * Adds a document to a user's collection in Firebase.
+   * @param uid user's unique id
+   * @param collection_id id of collection to add document to
+   * @param doc_id id of document to add
+   * @param data map of data to add to document
+   * @throws IllegalArgumentException if uid, collection_id, doc_id, or data is null
+   */
   @Override
   public void addDocument(String uid, String collection_id, String doc_id, Map<String, Object> data)
       throws IllegalArgumentException {
@@ -150,15 +157,22 @@ public class FirebaseUtilities implements StorageInterface {
     collectionRef.document(doc_id).set(data);
   }
 
+  /**
+   * gets all documents in the collection 'collection_id' for user 'uid
+   * @param uid user's unique id
+   * @param collection_id id of collection to get document from
+   * @param doc_id id of document to get
+   * @return map of data from document
+   * @throws InterruptedException if thread is interrupted
+   * @throws ExecutionException if execution fails
+   * @throws IllegalArgumentException if uid, collection_id, or doc_id is null
+   */
   @Override
   public List<Map<String, Object>> getCollection(String uid, String collection_id)
       throws InterruptedException, ExecutionException, IllegalArgumentException {
     if (uid == null || collection_id == null) {
       throw new IllegalArgumentException("getCollection: uid and/or collection_id cannot be null");
     }
-    // QUESTION TO TIM: should we make this an exercise too?
-
-    // gets all documents in the collection 'collection_id' for user 'uid'
 
     Firestore db = FirestoreClient.getFirestore();
     // 1: Make the data payload to add to your collection

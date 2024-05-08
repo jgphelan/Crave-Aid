@@ -9,11 +9,23 @@ public class MealDBDataSourceException extends Exception {
   // The root cause of this datasource problem
   private final Throwable cause;
 
+  /**
+   * Constructs a new MealDBDataSourceException with the provided message but null cause.
+   *
+   * @param message the message to communicate
+   * @param cause the root cause of the issue
+   */
   public MealDBDataSourceException(String message) {
     super(message); // Exception message
     this.cause = null;
   }
 
+  /**
+   * Constructs a new MealDBDataSourceException with the provided message and cause.
+   *
+   * @param message the message to communicate
+   * @param cause the root cause of the issue
+   */
   public MealDBDataSourceException(String message, Throwable cause) {
     super(message); // Exception message
     this.cause = cause;

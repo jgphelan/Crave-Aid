@@ -1,16 +1,12 @@
 package edu.brown.cs.student.main.server.parseFilterHelpers;
 
 /**
- * mealInfo[i][20] = meal.getString("idMeal"); // id mealInfo[i][21] = meal.getString("strMeal"); //
- * name mealInfo[i][22] = meal.getString("strCategory"); // category mealInfo[i][23] =
- * meal.getString("strSource"); // website link mealInfo[i][24] = meal.getString("strYoutube"); //
- * youtube mealInfo[i][25] = meal.getString("strMealThumb"); // thumbnail mealInfo[i][26] =
- * meal.getString("strInstructions"); // instructions mealInfo[i][27] =
- * Integer.toString(emptyCount); // number of total ingredients in recipe; mealInfo[i][28] =
- * Integer.toString(sharedCount); // number of ingredients in recipe and search; }
+ * This class represents a recipe object, which contains all the information about a recipe that we
+ * need to display it on the frontend.
  */
 public class Recipe {
 
+  // Fields
   private String[] ingredients;
   private String[] measurements;
   private String id;
@@ -23,7 +19,7 @@ public class Recipe {
   private String totalIngredients;
   private String sharedIngredients;
 
-  // Constructors, getters, and setters
+  // Constructors
   public Recipe(
       String[] ingredients,
       String[] measurements,
@@ -49,6 +45,7 @@ public class Recipe {
     this.sharedIngredients = sharedIngredients;
   }
 
+  // Getters
   public String[] getIngredients() {
     return ingredients;
   }
