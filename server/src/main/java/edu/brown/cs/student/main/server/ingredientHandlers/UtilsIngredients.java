@@ -17,7 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-
+/*
+ * UtilsIngredients class for helpers that are used in the ingredient handlers
+ * such as converting a map to a JSON string, converting a 2D array of Strings
+ * to a JSON string, making a GET request to a URL and returning the response as
+ * a string, parsing the recipe data from a 2D array of Strings to a JSON string,
+ * and getting all ingredients for a user from the Firebase database
+ */
 public class UtilsIngredients {
 
   /**

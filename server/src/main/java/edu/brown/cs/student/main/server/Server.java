@@ -13,13 +13,15 @@ import java.io.IOException;
 import spark.Spark;
 
 /**
- * A class for running ACS and redlining APIs. ACS and redlining APIs are cached in this
- * implementation with cached results held for 4 minutes.
+ * The Server class is responsible for setting up the Spark server and sending requests to the
+ * appropriate handlers.
  */
 public class Server {
   static final int port = 3232;
 
-  /** Constructor for the Server class. */
+  /**
+   * The constructor for the Server class.
+   */
   public Server() {
     Spark.port(port);
     after(
@@ -28,7 +30,7 @@ public class Server {
           response.header("Access-Control-Allow-Methods", "*");
         });
 
-    // PINS
+    // Initialize FirebaseUtilities
     FirebaseUtilities firebase_utility = null;
     try {
       firebase_utility = new FirebaseUtilities();
@@ -37,17 +39,13 @@ public class Server {
       return;
     }
 
+    // The handler to to the differentt server endpoints
+    // firebase_utility is passed to the handlers to interact with Firebase
     Spark.get("/add-ingredient", new AddIngredientHandler(firebase_utility));
     Spark.get("/remove-ingredient", new RemoveIngredientHandler(firebase_utility));
     Spark.get("/get-ingredients", new GetAllIngredientsHandler(firebase_utility));
     Spark.get("/clear-ingredients", new ClearIngredientsHandler(firebase_utility));
     Spark.get("/get-recipes", new RecipeCallHandler(firebase_utility));
-
-    // Add similar routes for removing, getting, and clearing ingredients
-
-    // Spark.get("/add-pin", new AddPinHandler(firebase_utility));
-    // Spark.get("/get-pins", new GetPinsHandler(firebase_utility));
-    // Spark.get("/clear-pins", new ClearPinsHandler(firebase_utility));
 
     // CLEARING USER (for e2e testing)
     Spark.get("/clear-user", new ClearUserHandler(firebase_utility));
@@ -63,12 +61,10 @@ public class Server {
   }
 
   /**
-   * The main method for running a cached server servicing the broadband, redliningData, and
-   * redliningSearch endpoints.
-   *
-   * @param args unused
-   */
-  public static void main(String[] args) {
+   * The main method for the Server class.
+   * @param args the arguments for the main method
+  */
+    public static void main(String[] args) {
     new Server();
     System.out.println("Server started at http://localhost:" + port);
   }
