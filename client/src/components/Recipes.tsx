@@ -5,7 +5,7 @@ import { getRecipes } from "../utils/api";
 interface Recipe {
   name: string;
   image: string;
-  description: string;
+  instructions: string;
   ingredients: string[];
   youtube: string;
 }
@@ -18,6 +18,7 @@ const Recipes: React.FC = () => {
   const [showResults, setShowResults] = useState<boolean>(false);
   const [modal, setModal] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     // For now, let's mock some recipe data
@@ -38,6 +39,8 @@ const Recipes: React.FC = () => {
     // ];
 
     try {
+      setSearchResults([]);
+      setLoading(true); // Set loading state to true when search starts
       const response = await getRecipes(selectedItems);
 
       const jdata = JSON.parse(response.data);
@@ -47,7 +50,7 @@ const Recipes: React.FC = () => {
       const recipes = jdata.map((item: any) => ({
         name: item.name,
         image: item.thumbnail,
-        description: item.instructions.substring(0, 150) + "...",
+        instructions: item.instructions,
         ingredients: Array.isArray(item.ingredients) ? item.ingredients : [],
         youtube: item.youtube,
       }));
@@ -58,6 +61,8 @@ const Recipes: React.FC = () => {
       setShowResults(true);
     } catch (error) {
       console.log("Failed to fetch recipes", error);
+    } finally {
+      setLoading(false); // Set loading state to false when search completes
     }
   };
 
@@ -141,6 +146,8 @@ const Recipes: React.FC = () => {
       <div className="search-box">
         <div className="row">
           <input
+            aria-label="ingredients-searchbox"
+            aria-description="Search box to find ingredients"
             type="text"
             className="input-box"
             id="input-box"
@@ -169,7 +176,10 @@ const Recipes: React.FC = () => {
         </div>
       </div>
       <div className="pantry-items">
-        <table>
+        <table
+          aria-label="pantry-items-table"
+          aria-description="Table to hold pantry items"
+        >
           <tbody>
             {chunkArray(selectedItems, 4).map((chunk, rowIndex) => (
               <tr key={rowIndex}>
@@ -192,33 +202,46 @@ const Recipes: React.FC = () => {
           <div className="recipes-header">
             {searchResults.length} recipes found.
           </div>
-          <table className="recipes-table">
-            <tbody>
-              {searchResults.map((recipe, index) => (
-                <tr key={index}>
-                  <hr className="line" width="75%" />
+          {loading && <div className="spinner"></div>}
+          {!loading && (
+            <table className="recipes-table">
+              <tbody>
+                {searchResults.map((recipe, index) => (
+                  <tr key={index}>
+                    <hr className="line" width="75%" />
 
-                  <img
-                    className="recipe-image"
-                    src={recipe.image}
-                    alt={recipe.name}
-                  />
+                    <img
+                      aria-label="recipe-image"
+                      aria-description="image of the displayed recipe"
+                      className="recipe-image"
+                      src={recipe.image}
+                      alt={recipe.name}
+                    />
 
-                  <div className="centered-content">
-                    <p className="name">{recipe.name}</p>
-                    <p>You have {} ingredients needed</p>
-                    <p>You are missing {} ingredients</p>
-                    <button
-                      className="modal-button"
-                      onClick={() => toggleModal(recipe)}
-                    >
-                      See more
-                    </button>
-                  </div>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <div className="centered-content">
+                      <p
+                        aria-label="recipe-name"
+                        aria-description="Name of the recipe"
+                        className="name"
+                      >
+                        {recipe.name}
+                      </p>
+                      <p>You have {} ingredients needed</p>
+                      <p>You are missing {} ingredients</p>
+                      <button
+                        aria-label="modal-button"
+                        aria-description="Button to see more about the recipe"
+                        className="modal-button"
+                        onClick={() => toggleModal(recipe)}
+                      >
+                        See more
+                      </button>
+                    </div>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
       {modal && selectedRecipe && (
@@ -231,7 +254,11 @@ const Recipes: React.FC = () => {
               src={selectedRecipe.image}
               alt={selectedRecipe.name}
             />
-            <div className="ingredients-list">
+            <div
+              aria-label="ingredients-list"
+              aria-description="List of ingredients"
+              className="ingredients-list"
+            >
               <h3>Ingredients:</h3>
               {selectedRecipe.ingredients
                 .filter(Boolean)
@@ -242,11 +269,38 @@ const Recipes: React.FC = () => {
                   </div>
                 ))}
             </div>
-            <p>{selectedRecipe.description}</p>
-            <a href={selectedRecipe.youtube} target="_blank">
+            {selectedRecipe.instructions && (
+              <div
+                aria-label="instructions-list"
+                aria-description="List of instructions to make recipe"
+                className="instructions-list"
+              >
+                <h3>Instructions:</h3>
+                {selectedRecipe.instructions
+                  .split(".")
+                  .filter((sentence) => sentence.trim() !== "")
+                  .map((sentence, idx) => (
+                    <div key={idx}>
+                      <span>&#8226;</span> {sentence.trim()}.
+                    </div>
+                  ))}
+              </div>
+            )}
+            <h3>Need help with this recipe?</h3>
+            <a
+              aria-label="video-link"
+              aria-description="Link to recipe video"
+              href={selectedRecipe.youtube}
+              target="_blank"
+            >
               Watch the video tutorial
             </a>
-            <button className="close-modal" onClick={() => toggleModal(null)}>
+            <button
+              aria-label="close-modal"
+              aria-description="Button to close recipe modal"
+              className="close-modal"
+              onClick={() => toggleModal(null)}
+            >
               <i className="fa-solid fa-xmark"></i>
             </button>
           </div>

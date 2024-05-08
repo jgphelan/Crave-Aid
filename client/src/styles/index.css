@@ -189,11 +189,8 @@ input {
   float: left;
   padding-left: 100px;
   padding-bottom: 40px;
-  max-width: 300px;
+  max-height: 320px;
 }
-
-
-
 
 .centered-content {
   padding-right: 50px;
@@ -213,7 +210,9 @@ body.active-modal {
   font-size: 22px;
   border-radius: 10px;
   background-color: #bc4749;
+  color: white;
   padding: 10px 20px;
+  margin: 20px;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -239,7 +238,7 @@ body.active-modal {
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: #f1f1f1;
+  background: #ffffff;
   padding: 14px 28px;
   border-radius: 3px;
   width: 400px;
@@ -259,8 +258,28 @@ body.active-modal {
   font-size: 30px;
   color: #6a994e;
   font-weight: bold;
+  margin: 20px;
 }
 
 .line {
   margin-bottom: 40px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
 }

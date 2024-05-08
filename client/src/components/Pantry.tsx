@@ -20,13 +20,13 @@ const Pantry: React.FC = () => {
   // Function to fetch all ingredients from the 'pantry' collection
   const loadAllIngredients = async () => {
     try {
-          const ingredients = await getAllIngredients("pantry");
-          console.log(ingredients);
-          if (ingredients) {
-            setSelectedItems(ingredients.data);
-          }
+      const ingredients = await getAllIngredients("pantry");
+      console.log(ingredients);
+      if (ingredients) {
+        setSelectedItems(ingredients.data);
+      }
     } catch (error) {
-          console.error("Failed to load ingredients:", error);
+      console.error("Failed to load ingredients:", error);
     }
   };
 
@@ -51,7 +51,7 @@ const Pantry: React.FC = () => {
     if (selectedItems.includes(suggestion)) {
       //If the ingredient is already in pantry, remove it
       try {
-        await removeIngredient("pantry", suggestion);
+        await removeIngredient("pantry", suggestion.replace("%20", " "));
         const updatedItems = selectedItems.filter(
           (item) => item !== suggestion
         );
