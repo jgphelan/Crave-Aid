@@ -7,6 +7,14 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/*
+ * A class that handles the clearing of all words within the databse for a user.
+ * specifically in the '/clear_user' endpoint.
+ * This class is used in the Spark server to handle the '/clear_user' endpoint.
+ *
+ * @param storageHandler: StorageInterface object for handling database related tasks
+ * @return Object: JSON object containing the response type
+ */
 public class ClearUserHandler implements Route {
 
   public StorageInterface storageHandler;

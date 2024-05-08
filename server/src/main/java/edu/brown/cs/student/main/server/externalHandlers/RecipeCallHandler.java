@@ -21,6 +21,16 @@ public class RecipeCallHandler implements Route {
     this.firebaseUtilities = firebaseUtilities;
   }
 
+  /*
+   * handle is called by another function when the frontend makes a call to the
+   * backend. It takes in a string of ingredients delimited by commas and returns
+   * a list of recipes and their respective info as a json
+   *
+   * @param req - the request object
+   * @param res - the response object
+   * @return - a json object containing the status of the call and the data
+   */
+
   @Override
   public Object handle(Request req, Response res) {
     String ingredients = req.queryParams("ingredients");

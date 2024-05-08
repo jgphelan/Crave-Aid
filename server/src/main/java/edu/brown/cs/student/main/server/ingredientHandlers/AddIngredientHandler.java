@@ -6,6 +6,11 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * AddIngredientHandler class for handling adding an ingredient to a user's collection
+ *
+ * @param firebaseUtilities: FirebaseUtilities object for handling Firebase related tasks
+ */
 public class AddIngredientHandler implements Route {
   private FirebaseUtilities firebaseUtilities;
 
