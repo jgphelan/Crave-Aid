@@ -8,14 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * The Caller class is responsible for calling the API and parsing the JSON response to get 
+ * The Caller class is responsible for calling the API and parsing the JSON response to get
  * information for the recipe.
- * 
- * This class is principally used in the IngredientHandlers package to get the recipe information
- * the two parse fucntions are specifically used in the recipecallhandler and the rest
- * of the functions are used in the ingredientHandlers package more generally.
+ *
+ * <p>This class is principally used in the IngredientHandlers package to get the recipe information
+ * the two parse fucntions are specifically used in the recipecallhandler and the rest of the
+ * functions are used in the ingredientHandlers package more generally.
  */
-
 public class Caller {
 
   // Takes in a json containing multiple items fitting multi ingredient choice
@@ -26,24 +25,21 @@ public class Caller {
    * "https://www.themealdb.com/images/media/meals/xrrtss1511555269.jpg", "idMeal": "52875" } ] }
    */
 
-   /* Parses the meal ID from the JSON response which contains the ID for each
-    * recipe in the JSON response.
-    *
-    * @param json The JSON response from the API call
-   */
-  /**
-   * Parses the meal IDs from the JSON response which contains the ID for each
-   * recipe in the JSON
-   * response.
+  /* Parses the meal ID from the JSON response which contains the ID for each
+   * recipe in the JSON response.
    *
    * @param json The JSON response from the API call
-   * shape: { "meals": [ { "strMeal": "Chicken Fajita Mac and
-   *  Cheese", "strMealThumb":
-   *  "https://www.themealdb.com/images/media/meals/qrqywr1503066605.jpg",
-   *  "idMeal": "52818" }, {
-   *  "strMeal": "Chicken Ham and Leek Pie", "strMealThumb":
-   *  "https://www.themealdb.com/images/media/meals/xrrtss1511555269.jpg",
-   *  "idMeal": "52875" } ] }
+   */
+  /**
+   * Parses the meal IDs from the JSON response which contains the ID for each recipe in the JSON
+   * response.
+   *
+   * @param json The JSON response from the API call shape: { "meals": [ { "strMeal": "Chicken
+   *     Fajita Mac and Cheese", "strMealThumb":
+   *     "https://www.themealdb.com/images/media/meals/qrqywr1503066605.jpg", "idMeal": "52818" }, {
+   *     "strMeal": "Chicken Ham and Leek Pie", "strMealThumb":
+   *     "https://www.themealdb.com/images/media/meals/xrrtss1511555269.jpg", "idMeal": "52875" } ]
+   *     }
    * @return An array of strings containing the meal ID for each recipe
    */
   public static String[] parseMealIDFromMulti(String json) {
@@ -68,22 +64,19 @@ public class Caller {
 
   /**
    * Parses the meal information from the 2D array of strings containing the information for each
-   * recipe. Making API calls to theMealDB for every single one and consinuously calculating
-   * fields such as numIngredients. 
-   * The function also checks if the ingredient is found in
-   * the user's pantry -> If the ingredient is found in the user's pantry, the sharedCount is
-   * incremented.
+   * recipe. Making API calls to theMealDB for every single one and consinuously calculating fields
+   * such as numIngredients. The function also checks if the ingredient is found in the user's
+   * pantry -> If the ingredient is found in the user's pantry, the sharedCount is incremented.
    *
    * @param uid The user ID of the user
    * @param idArr The array of meal IDs for each recipe
    * @param ingredients The array of ingredients for the user
    * @param firebaseUtilities The FirebaseUtilities object used to interact with the database
    * @return A 2D array of strings containing the information for each recipe where each row
-   * corresponds to a single recipe and each column corresponds to a different attribute of the
-   * recipe. 
-   * The columns are as follows: 0-19: Ingredients, 20: ID, 21: Name, 22: Category, 23:
-   * Source, 24: Youtube, 25: Thumbnail, 26: Instructions, 27: Total Ingredients, 28: Shared
-   * Ingredients (Ingredients in the recipe that are also in the user's pantry).
+   *     corresponds to a single recipe and each column corresponds to a different attribute of the
+   *     recipe. The columns are as follows: 0-19: Ingredients, 20: ID, 21: Name, 22: Category, 23:
+   *     Source, 24: Youtube, 25: Thumbnail, 26: Instructions, 27: Total Ingredients, 28: Shared
+   *     Ingredients (Ingredients in the recipe that are also in the user's pantry).
    * @throws IOException If an error occurs while getting the ingredients
    */
   public static String[][] parse(
@@ -140,7 +133,7 @@ public class Caller {
       // again because of the nature of the API response, some fields may be null
       // but because now the getstring is different and so is the space into which
       // the string is being placed, the catch all is different for each field
-      // could be refactored to be more concise using a helper function or even an 
+      // could be refactored to be more concise using a helper function or even an
       // array of fields and a loop but this is more explicit and readable
       try {
         mealInfo[i][20] = meal.getString("idMeal"); // id
@@ -202,7 +195,6 @@ public class Caller {
     return binarySearch(lowerCaseIngredients, ingredient.toLowerCase());
   }
 
-  
   /**
    * Checks if the ingredient is found in the user's pantry.
    *
@@ -216,7 +208,7 @@ public class Caller {
     int low = 0;
     int high = sortedIngredients.size() - 1;
 
-    // binary search for ingredient in pantry list of ingredients 
+    // binary search for ingredient in pantry list of ingredients
     while (low <= high) {
       // calculate midpoint
       int mid = low + (high - low) / 2;

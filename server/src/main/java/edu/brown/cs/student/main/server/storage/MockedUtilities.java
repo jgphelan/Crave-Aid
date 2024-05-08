@@ -15,6 +15,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Returns the userData map.
+   *
    * @return userData map
    */
   public Map<String, Map<String, Map<String, Map<String, Object>>>> getUserData() {
@@ -23,11 +24,11 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Adds an ingredient to a user's collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to add ingredient to
    * @param ingredientName name of ingredient to add
    */
-
   @Override
   public void addIngredient(String uid, String collectionName, String ingredientName) {
     // Add user if not present
@@ -42,6 +43,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Removes an ingredient from a user's collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to remove ingredient from
    * @param ingredientName name of ingredient to remove
@@ -56,6 +58,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Gets all ingredients from a user's collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to get ingredients from
    * @return list of all ingredients in collection
@@ -63,7 +66,7 @@ public class MockedUtilities implements StorageInterface {
   @Override
   public List<String> getAllIngredients(String uid, String collectionName) {
     List<String> ingredients = new ArrayList<>();
-    // Get ingredients if user and collection exist in userData 
+    // Get ingredients if user and collection exist in userData
     if (userData.containsKey(uid) && userData.get(uid).containsKey(collectionName)) {
       ingredients.addAll(userData.get(uid).get(collectionName).keySet());
     }
@@ -72,6 +75,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Clears all ingredients from a user's collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to clear ingredients from
    */
@@ -85,6 +89,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Adds a user to the userData map.
+   *
    * @param uid user's unique id
    */
   @Override
@@ -94,6 +99,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * Adds a document to a collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collection_id id of collection to add document to
    * @param doc_id id of document to add
@@ -105,6 +111,7 @@ public class MockedUtilities implements StorageInterface {
 
   /**
    * gets a document from a collection in the userData map.
+   *
    * @param uid user's unique id
    * @param collection_id id of collection to get document from
    */

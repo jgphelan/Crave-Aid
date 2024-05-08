@@ -19,9 +19,7 @@ import spark.Spark;
 public class Server {
   static final int port = 3232;
 
-  /**
-   * The constructor for the Server class.
-   */
+  /** The constructor for the Server class. */
   public Server() {
     Spark.port(port);
     after(
@@ -62,9 +60,10 @@ public class Server {
 
   /**
    * The main method for the Server class.
+   *
    * @param args the arguments for the main method
-  */
-    public static void main(String[] args) {
+   */
+  public static void main(String[] args) {
     new Server();
     System.out.println("Server started at http://localhost:" + port);
   }

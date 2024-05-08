@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-/**
- * StorageInterface defines the methods for a StorageInterface
- */
+/** StorageInterface defines the methods for a StorageInterface */
 public interface StorageInterface {
 
   /**
    * Adds a document to a collection in Firestore.
+   *
    * @param uid user's unique id
    * @param collection_id collection id
    * @param doc_id document id
@@ -20,6 +19,7 @@ public interface StorageInterface {
 
   /**
    * Gets a collection in Firestore.
+   *
    * @param uid user's unique id
    * @param collection_id collection id
    * @param doc_id document id
@@ -32,6 +32,7 @@ public interface StorageInterface {
 
   /**
    * clears user data
+   *
    * @param uid user's unique id
    * @param collection_id collection id
    * @param doc_id document id
@@ -40,6 +41,7 @@ public interface StorageInterface {
 
   /**
    * Adds an ingredient to a user's collection in Firestore.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to add ingredient to
    * @param ingredientName name of ingredient to add
@@ -48,6 +50,7 @@ public interface StorageInterface {
 
   /**
    * Removes an ingredient from a user's collection in Firestore.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to remove ingredient from
    * @param ingredientName name of ingredient to remove
@@ -56,6 +59,7 @@ public interface StorageInterface {
 
   /**
    * Gets all ingredients from a user's collection in Firestore.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to get ingredients from
    * @return list of all ingredients in collection
@@ -67,6 +71,7 @@ public interface StorageInterface {
 
   /**
    * Clears ingredients in Firestore.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to clear ingredients from
    */

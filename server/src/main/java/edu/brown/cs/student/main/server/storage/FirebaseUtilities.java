@@ -20,14 +20,15 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
- * FirebaseUtilities holds all methods responsible for interactions with Firebase. 
- * Implements StorageInterface. Class is specifically responsible for adding, 
- * removing, and getting ingredients from Firebase.
+ * FirebaseUtilities holds all methods responsible for interactions with Firebase. Implements
+ * StorageInterface. Class is specifically responsible for adding, removing, and getting ingredients
+ * from Firebase.
  */
 public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Constructor for FirebaseUtilities. Initializes FirebaseApp with FirebaseOptions.
+   *
    * @throws IOException if FirebaseOptions cannot be initialized.
    */
   @SuppressWarnings("deprecation")
@@ -53,6 +54,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Adds an ingredient to a user's collection in Firebase.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to add ingredient to
    * @param ingredientName name of ingredient to add
@@ -68,6 +70,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Removes an ingredient from a user's collection in Firebase.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to remove ingredient from
    * @param ingredientName name of ingredient to remove
@@ -82,6 +85,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Gets all ingredients from a user's collection in Firebase.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to get ingredients from
    * @return list of all ingredients in collection
@@ -104,6 +108,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Clears all ingredients from a user's collection in Firebase.
+   *
    * @param uid user's unique id
    * @param collectionName name of collection to clear ingredients from
    */
@@ -117,6 +122,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * clears the collections inside of a specific user.
+   *
    * @param uid user's unique id
    * @throws IllegalArgumentException if uid is null
    */
@@ -129,6 +135,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * Adds a document to a user's collection in Firebase.
+   *
    * @param uid user's unique id
    * @param collection_id id of collection to add document to
    * @param doc_id id of document to add
@@ -159,6 +166,7 @@ public class FirebaseUtilities implements StorageInterface {
 
   /**
    * gets all documents in the collection 'collection_id' for user 'uid
+   *
    * @param uid user's unique id
    * @param collection_id id of collection to get document from
    * @param doc_id id of document to get
