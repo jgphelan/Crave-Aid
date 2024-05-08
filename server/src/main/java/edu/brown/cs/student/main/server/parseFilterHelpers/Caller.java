@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.server.parseFilterHelpers;
 
 import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
-import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +33,7 @@ public class Caller {
   }
 
   public static String[][] parse(
-      String uid, String[] idArr, String[] ingredients, FirebaseUtilities firebaseUtilities)
+      String uid, String[] idArr, String[] ingredients, List<String> ingredientList)
       throws IOException {
 
     // get idMeal from each recipe
@@ -69,7 +68,7 @@ public class Caller {
             emptyCount--;
           }
 
-          if (isFoundInPantry(ing.toLowerCase(), uid, firebaseUtilities)) {
+          if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
             sharedCount++;
           }
         } catch (Exception e) {
@@ -121,11 +120,10 @@ public class Caller {
     return mealInfo;
   }
 
-  public static boolean isFoundInPantry(
-      String ingredient, String uid, FirebaseUtilities firebaseUtilities) throws Exception {
-    List<String> ingredients = firebaseUtilities.getAllIngredients(uid, "pantry");
+  public static boolean isFoundInPantry(String ingredient, String uid, List<String> ingredientList)
+      throws Exception {
     List<String> lowerCaseIngredients =
-        ingredients.stream().map(String::toLowerCase).collect(Collectors.toList());
+        ingredientList.stream().map(String::toLowerCase).collect(Collectors.toList());
     return binarySearch(lowerCaseIngredients, ingredient.toLowerCase());
   }
 
