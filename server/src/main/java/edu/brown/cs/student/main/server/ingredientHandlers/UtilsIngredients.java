@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.main.server.parseFilterHelpers.Recipe;
+import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class UtilsIngredients {
 
@@ -98,5 +100,18 @@ public class UtilsIngredients {
 
     // Convert to JSON
     return jsonAdapter.toJson(recipes);
+  }
+
+  public static List<String> getAllIngredientsForUser(String uid) throws IOException {
+    FirebaseUtilities firebaseUtilities = new FirebaseUtilities();
+    try {
+      return firebaseUtilities.getAllIngredients(uid, "pantry");
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+      return null;
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }

@@ -41,7 +41,7 @@ public class Server {
     Spark.get("/remove-ingredient", new RemoveIngredientHandler(firebase_utility));
     Spark.get("/get-ingredients", new GetAllIngredientsHandler(firebase_utility));
     Spark.get("/clear-ingredients", new ClearIngredientsHandler(firebase_utility));
-    Spark.get("/get-recipes", new RecipeCallHandler());
+    Spark.get("/get-recipes", new RecipeCallHandler(firebase_utility));
 
     // Add similar routes for removing, getting, and clearing ingredients
 

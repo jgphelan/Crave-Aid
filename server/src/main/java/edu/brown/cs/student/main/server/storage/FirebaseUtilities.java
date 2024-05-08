@@ -28,7 +28,7 @@ public class FirebaseUtilities implements StorageInterface {
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
     String workingDirectory = System.getProperty("user.dir");
     Path firebaseConfigPath =
-        Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
+        Paths.get(workingDirectory, "server", "src", "main", "resources", "firebase_config.json");
     // ^-- if your /resources/firebase_config.json exists but is not found,
     // try printing workingDirectory and messing around with this path.
 
@@ -68,7 +68,7 @@ public class FirebaseUtilities implements StorageInterface {
     List<String> ingredients = new ArrayList<>();
     List<QueryDocumentSnapshot> documents = collectionRef.get().get().getDocuments();
     for (DocumentSnapshot document : documents) {
-      ingredients.add(document.getId()); // Assuming the ingredient name is the document ID
+      ingredients.add(document.getId());
     }
     return ingredients;
   }

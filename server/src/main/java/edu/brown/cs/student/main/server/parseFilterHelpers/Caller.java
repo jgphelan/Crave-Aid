@@ -1,7 +1,10 @@
 package edu.brown.cs.student.main.server.parseFilterHelpers;
 
 import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
+import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,7 +33,9 @@ public class Caller {
     return idMeals;
   }
 
-  public static String[][] parse(String[] idArr, String[] ingredients) throws IOException {
+  public static String[][] parse(
+      String uid, String[] idArr, String[] ingredients, FirebaseUtilities firebaseUtilities)
+      throws IOException {
 
     // get idMeal from each recipe
     String[][] mealInfo = new String[idArr.length][29];
@@ -64,12 +69,11 @@ public class Caller {
             emptyCount--;
           }
 
-          for (String x : ingredients) {
-            if ((x.toLowerCase()).equals(ing.toLowerCase())) {
-              sharedCount++;
-            }
+          if (isFoundInPantry(ing.toLowerCase(), uid, firebaseUtilities)) {
+            sharedCount++;
           }
         } catch (Exception e) {
+          e.printStackTrace();
           mealInfo[i][j] = "";
           emptyCount--;
         }
@@ -115,5 +119,33 @@ public class Caller {
           Integer.toString(sharedCount); // number of ingredients in recipe and search;
     }
     return mealInfo;
+  }
+
+  public static boolean isFoundInPantry(
+      String ingredient, String uid, FirebaseUtilities firebaseUtilities) throws Exception {
+    List<String> ingredients = firebaseUtilities.getAllIngredients(uid, "pantry");
+    List<String> lowerCaseIngredients =
+        ingredients.stream().map(String::toLowerCase).collect(Collectors.toList());
+    return binarySearch(lowerCaseIngredients, ingredient.toLowerCase());
+  }
+
+  private static boolean binarySearch(List<String> sortedIngredients, String target) {
+    int low = 0;
+    int high = sortedIngredients.size() - 1;
+
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+      String midVal = sortedIngredients.get(mid);
+
+      if (midVal.compareTo(target) < 0) {
+        low = mid + 1;
+      } else if (midVal.compareTo(target) > 0) {
+        high = mid - 1;
+      } else {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

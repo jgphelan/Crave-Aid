@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server.externalHandlers;
 
 import edu.brown.cs.student.main.server.ingredientHandlers.UtilsIngredients;
 import edu.brown.cs.student.main.server.parseFilterHelpers.Caller;
+import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
@@ -9,10 +10,18 @@ import spark.Route;
 
 public class RecipeCallHandler implements Route {
 
+  private FirebaseUtilities firebaseUtilities;
+
+  public RecipeCallHandler(FirebaseUtilities firebaseUtilities) {
+    this.firebaseUtilities = firebaseUtilities;
+  }
+
   @SuppressWarnings("unused")
   @Override
   public Object handle(Request req, Response res) {
     String ingredients = req.queryParams("ingredients");
+    String uid = req.queryParams("uid");
+    System.out.println(uid);
     // splits comma delineated ingredient list
     String[] ingredientArray = ingredients.split(",");
 
@@ -29,7 +38,7 @@ public class RecipeCallHandler implements Route {
       String json = UtilsIngredients.fullApiResponseString(url);
 
       String[] idArr = Caller.parseMealIDFromMulti(json);
-      String[][] infoArr = Caller.parse(idArr, ingredientArray);
+      String[][] infoArr = Caller.parse(uid, idArr, ingredientArray, firebaseUtilities);
 
       // Serialize the 2D array
       String jsonData = UtilsIngredients.toJson2DArray(infoArr); // TODO switch to new strat
