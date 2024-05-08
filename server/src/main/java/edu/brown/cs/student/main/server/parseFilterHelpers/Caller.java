@@ -37,7 +37,7 @@ public class Caller {
       throws IOException {
 
     // get idMeal from each recipe
-    String[][] mealInfo = new String[idArr.length][29];
+    String[][] mealInfo = new String[idArr.length][49];
     for (int i = 0; i < idArr.length; i++) {
       // get the json from the query to pertaining mealId
 
@@ -60,20 +60,21 @@ public class Caller {
 
         try {
           String ing = meal.getString("strIngredient" + (j + 1)).trim();
-
           mealInfo[i][j] = ing;
-
+          String measure = meal.getString("strMeasure" + (j + 1)).trim();
+          mealInfo[i][j + 29] = measure;
           // get total ingredient count
           if (ing.isEmpty()) {
             emptyCount--;
           }
 
-          if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
-            sharedCount++;
-          }
+          // if (isFoundInPantry(ing.toLowerCase(), uid, ingredientList)) {
+          //   sharedCount++;
+          // }
         } catch (Exception e) {
           e.printStackTrace();
           mealInfo[i][j] = "";
+          mealInfo[i][j + 29] = "";
           emptyCount--;
         }
       }

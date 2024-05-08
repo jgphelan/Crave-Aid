@@ -283,3 +283,15 @@ body.active-modal {
   animation: spin 1s linear infinite;
   margin: auto;
 }
+
+.ingredients-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.ingredients-table td {
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  width: 50%;
+}
