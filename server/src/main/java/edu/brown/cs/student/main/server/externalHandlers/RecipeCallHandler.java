@@ -45,9 +45,6 @@ public class RecipeCallHandler implements Route {
           Map.of("status", "failure", "message", "Missing parameters"));
     }
 
-    // splits comma delineated ingredient list
-    String[] ingredientArray = ingredients.split(",");
-
     try {
       // GET THE INITIAL JSON FROM CALL TO ALL RECIPES AND PASS THAT JSON INTO
       // parseMealIDFromMulti

@@ -202,7 +202,7 @@ public class Caller {
    * @return True if the ingredient is found in the user's pantry, false otherwise
    * @throws Exception If an error occurs while getting the ingredients
    */
-  private static boolean binarySearch(List<String> sortedIngredients, String target) {
+  public static boolean binarySearch(List<String> sortedIngredients, String target) {
     int low = 0;
     int high = sortedIngredients.size() - 1;
     while (low <= high) {
@@ -214,14 +214,10 @@ public class Caller {
       if (midVal.compareTo(target) < 0) {
         // if mid val is less than target, set low to mid + 1
         low = mid + 1;
-        // if mid val is greater than target, set high to mid - 1
       } else if (midVal.compareTo(target) > 0) {
         // if mid val is greater than target, set high to mid - 1
         high = mid - 1;
       } else {
-        return true;
-      }
-    }
         // if mid val is equal to target, return true
         return true;
       }
@@ -229,4 +225,6 @@ public class Caller {
     // if target is not found, return false
     return false;
   }
+
+  // Close the Caller class here
 }
