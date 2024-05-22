@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+mport { expect, test } from "@playwright/test";
 import { clearUser } from "../../src/utils/api";
 
 /**
@@ -10,6 +10,49 @@ import { clearUser } from "../../src/utils/api";
  */
 
 const SPOOF_UID = "mock-user-id";
+
+interface Recipe {
+  name: string;
+  image: string;
+  instructions: string;
+  ingredients: string[];
+  youtube: string;
+}
+
+const mockRecipes: Recipe[] = [
+  {
+    name: "Pasta Carbonara",
+    image: "pasta_carbonara.jpg",
+    instructions:
+      "Cook spaghetti according to package instructions. In a separate bowl, whisk together eggs, grated Parmesan cheese, and black pepper. In a pan, cook diced pancetta until crispy. Once spaghetti is cooked, drain and add it to the pan with pancetta. Immediately pour the egg and cheese mixture over the hot pasta, stirring quickly to coat the spaghetti. Serve hot, garnished with additional Parmesan cheese and black pepper if desired.",
+    ingredients: [
+      "spaghetti",
+      "eggs",
+      "Parmesan cheese",
+      "black pepper",
+      "pancetta",
+    ],
+    youtube: "https://www.youtube.com/watch?v=example",
+  },
+  {
+    name: "Chicken Curry",
+    image: "chicken_curry.jpg",
+    instructions:
+      "In a large skillet, heat oil over medium heat. Add chopped onions and cook until softened. Add minced garlic, grated ginger, and curry powder, stirring constantly for about a minute. Add diced chicken breast to the skillet and cook until browned on all sides. Pour in diced tomatoes and coconut milk, stirring to combine. Simmer for 20-25 minutes until chicken is cooked through and sauce is thickened. Serve hot over rice, garnished with fresh cilantro.",
+    ingredients: [
+      "chicken breast",
+      "onions",
+      "garlic",
+      "ginger",
+      "curry powder",
+      "diced tomatoes",
+      "coconut milk",
+      "rice",
+      "fresh cilantro",
+    ],
+    youtube: "https://www.youtube.com/watch?v=example",
+  },
+];
 
 test.beforeEach(
   "add spoof uid cookie to browser",
@@ -198,4 +241,125 @@ test("test-recipe-page-searching", async ({ page }) => {
   await expect(page.getByRole("cell", { name: "Salmon" })).toBeVisible();
   await expect(page.getByRole("cell", { name: "Sweetcorn" })).toBeVisible();
   await expect(page.getByText("recipes found.")).toBeVisible();
+});
+
+test("Search for recipes with one ingredient", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("avo");
+  await expect(page.getByText("avocado")).toBeVisible();
+  await page.getByLabel("search-button").click();
+  await expect(page.getByText("recipes found.")).toBeVisible();
+  await expect(page.getByText("Cajun spiced fish tacos")).toBeVisible();
+  await page
+    .locator("tr")
+    .filter({ hasText: "Cajun spiced fish tacos" })
+    .getByLabel("modal-button")
+    .click();
+  await expect(
+    page.getByRole("img", { name: "Cajun spiced fish tacos" })
+  ).toBeVisible();
+  await expect(page.getByText("6. Avocado")).toBeVisible();
+  await page.getByLabel("close-modal").click();
+
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("beef");
+  await expect(
+    page.locator("li").filter({ hasText: "Beef Fillet" })
+  ).toBeVisible();
+});
+
+test("Select and deselect ingredients from suggestions", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("avo");
+  await expect(page.getByText("avocado")).toBeVisible();
+  await page.click('li:has-text("avocado")');
+  await page.click('li:has-text("avocado")'); // deselect
+  await expect(page.getByText("avocado")).not.toBeVisible();
+});
+
+test("Search for recipes with multiple ingredients", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("avo");
+  await page.click('li:has-text("avocado")');
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("garl");
+  await page.click('li:has-text("garlic")');
+  await page.getByLabel("search-button").click();
+  await expect(page.getByText("recipes found.")).toBeVisible();
+  await expect(page.getByText("Cajun spiced fish tacos")).toBeVisible();
+});
+
+test("View recipe details in modal", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("avo");
+  await page.click('li:has-text("avocado")');
+  await page.getByLabel("search-button").click();
+  await page
+    .locator("tr")
+    .filter({ hasText: "Cajun spiced fish tacos" })
+    .getByLabel("modal-button")
+    .click();
+  await page.getByLabel("modal-button").click();
+  await expect(page.getByText("Ingredients:")).toBeVisible();
+  await expect(page.getByText("6. Avocado")).toBeVisible();
+  await expect(page.getByText("Instructions:")).toBeVisible();
+});
+
+test("Search multiple ingredients with no common recipe", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("avo");
+  await page.click('li:has-text("avocado")');
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("beef");
+  await page.click('li:has-text("beef")');
+  await page
+    .getByPlaceholder("Search a recipe by ingredients")
+    .fill("cinnamon");
+  await page.click('li:has-text("cinnamon")');
+
+  await locator.click();
+  await expect(page.getByText(" 0 recipes found.")).toBeVisible();
+});
+
+test("Search for recipes with empty input", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+
+  await page.getByLabel("search-button").click();
+  await expect(page.getByText("recipes found.")).not.toBeVisible();
+});
+
+test("Search for recipes with non-existing ingredient", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("xyz");
+  await expect(page.getByText("avocado")).not.toBeVisible();
+});
+
+test("Search for recipes with case-insensitive ingredient", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("AVO");
+  await expect(page.getByText("avocado")).toBeVisible();
+});
+
+test("Search for recipes with the end of the word", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByRole("button", { name: "Recipes" }).click();
+
+  await page.getByPlaceholder("Search a recipe by ingredients").click();
+  await page.getByPlaceholder("Search a recipe by ingredients").fill("cado");
+  await expect(page.getByText("avocado")).toBeVisible();
 });

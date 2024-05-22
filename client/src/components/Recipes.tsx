@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IngredientsHolder } from "./IngredientHolder";
 import { getRecipes } from "../utils/api";
 
+//Recipe interface, to be filled in from the backend for each recipe item
 interface Recipe {
   name: string;
   image: string;
@@ -13,6 +14,20 @@ interface Recipe {
   totalIngredients: number;
 }
 
+const nimTelsonRecipe: Recipe[] = [
+  {
+    name: "Nim Telson",
+    image: "https://cs0320.github.io/staff/tim.jpg",
+    instructions: "Enjoy your life!",
+    ingredients: ["React", "Java", "Python", "CSS", "Typescript", "Node"],
+    measurements: ["100%", "100%", "100%", "100%", "100%", "100%"],
+    youtube:
+      "https://www.youtube.com/watch?time_continue=8&v=E3RcD6LleYU&embeds_referring_euri=https%3A%2F%2Fvideo.search.yahoo.com%2F&embeds_referring_origin=https%3A%2F%2Fvideo.search.yahoo.com&source_ve_path=MzY4NDIsMjg2NjY&feature=emb_logo",
+    sharedIngredients: 0,
+    totalIngredients: 0,
+  },
+];
+
 const Recipes: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
@@ -23,26 +38,14 @@ const Recipes: React.FC = () => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(false);
 
+  //Method to handle searching for recipes
   const handleSearch = async () => {
-    // For now, let's mock some recipe data
-    // const mockRecipes: Recipe[] = [
-    //   {
-    //     name: "Pasta Carbonara",
-    //     image: "pasta_carbonara.jpg",
-    //     description:
-    //       "A classic Italian pasta dish with eggs, cheese, and pancetta.",
-    //   },
-    //   {
-    //     name: "Chicken Curry",
-    //     image: "chicken_curry.jpg",
-    //     description:
-    //       "A flavorful Indian dish made with chicken, spices, and tomatoes.",
-    //   },
-    //   // Add more mock recipes as needed
-    // ];
-
     try {
       setSearchResults([]);
+      if (selectedItems.includes("Nim Telson")) {
+        setSearchResults(nimTelsonRecipe);
+        alert("Thank you for a wonderful semester!");
+      }
       setLoading(true); // Set loading state to true when search starts
       const response = await getRecipes(selectedItems);
 
@@ -63,6 +66,9 @@ const Recipes: React.FC = () => {
 
       // Here you would perform the actual search based on searchTerm
       // For now, let's just use the mock data
+      if (selectedItems.includes("Nim Telson")) {
+        alert("Thank you for a wonderful semester!");
+      }
       setSearchResults(recipes);
       setShowResults(true);
     } catch (error) {
@@ -77,8 +83,6 @@ const Recipes: React.FC = () => {
     const value = event.target.value;
     setSearchTerm(value);
     if (value.length > 0) {
-      // REPLACE WITH INGREDIENTS DATA
-      // console.log(IngredientsHolder.ingredient_list);
       const filteredSuggestions = IngredientsHolder.ingredient_list.filter(
         (suggestion) => suggestion.toLowerCase().includes(value.toLowerCase())
       );
@@ -133,14 +137,14 @@ const Recipes: React.FC = () => {
     );
   };
 
-  const populatedPopup = "hi";
-
   //Modal from here: https://www.youtube.com/watch?v=9DwGahSqcEc
+  //Modal which holds the recipe information
   const toggleModal = (recipe: Recipe | null) => {
     setModal(!modal);
     setSelectedRecipe(recipe); // Add this line to set the selected recipe
   };
 
+  //Helping with the modal appearing and dissapearing
   if (modal) {
     document.body.classList.add("active-modal");
   } else {
@@ -149,11 +153,15 @@ const Recipes: React.FC = () => {
 
   return (
     <div>
-      <div className="search-box">
+      <div
+        className="search-box"
+        aria-label="search-box"
+        aria-description="Search box to find ingredients to cook with"
+      >
         <div className="row">
           <input
             aria-label="ingredients-searchbox"
-            aria-description="Search box to find ingredients"
+            aria-description="Input box to enter ingredients"
             type="text"
             className="input-box"
             id="input-box"
@@ -162,11 +170,20 @@ const Recipes: React.FC = () => {
             placeholder="Search a recipe by ingredients"
             autoComplete="off"
           />
-          <button onClick={handleSearch}>
+          <button
+            onClick={handleSearch}
+            aria-label="handle-search-button"
+            aria-description="Button to handle searching"
+          >
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
-        <div className="result-box" id="result-box">
+        <div
+          className="result-box"
+          id="result-box"
+          aria-label="result-box"
+          aria-description="Box to show ingredients"
+        >
           <ul>
             {suggestions.map((suggestion, index) => (
               <li key={index} onClick={() => handleClick(suggestion)}>
@@ -181,7 +198,7 @@ const Recipes: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="pantry-items">
+      <div className="pantry-items" aria-label="pantry-items">
         <table
           aria-label="pantry-items-table"
           aria-description="Table to hold pantry items"
@@ -233,13 +250,15 @@ const Recipes: React.FC = () => {
                         {recipe.name}
                       </p>
                       <p>
-                        You have {recipe.sharedIngredients} of{" "}
-                        {recipe.totalIngredients} ingredients needed
+                        You have <strong>{recipe.sharedIngredients}</strong> of{" "}
+                        <strong>{recipe.totalIngredients}</strong> ingredients
+                        needed
                       </p>
                       <p>
                         You are missing{" "}
-                        {recipe.totalIngredients -
-                          recipe.sharedIngredients}{" "}
+                        <strong>
+                          {recipe.totalIngredients - recipe.sharedIngredients}
+                        </strong>{" "}
                         ingredients
                       </p>
                       <button

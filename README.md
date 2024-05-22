@@ -44,7 +44,8 @@ Includes:
 - **MealDBDataSourceException:** Exception handlers
 - **Recipe:** stores a recipe object which is later serialized into a JSON in caller.
 
-*** Implementation Notes ***
+**_ Implementation Notes _**
+
 - Caller is aided by two function, isInPantry, and binarySearch which efficiently sort a recipe's ingrediants list, and binary search it with the user's ingredients list to find if the user contains, or does not contain, an ingredient.
 
 ### Front End (client/src)
@@ -53,9 +54,10 @@ Components contains all of the components of the front end. This includes import
 
 Styles contains all of the css files that contain style information for each part of the UI.
 
-Utils contains utility files used by components to cleanly work with the UI. api.ts is used for interacting with API endpoints to connect front end logic to back end data. cookie.ts is used to manage user cookies with Firebase. 
+Utils contains utility files used by components to cleanly work with the UI. api.ts is used for interacting with API endpoints to connect front end logic to back end data. cookie.ts is used to manage user cookies with Firebase.
 
 ## Specific Design Choices
+
 1. We included all the possible ingredients in the front-end in a large list as to avoid a user entering in a ingredient incorrectly and returning an error. To enter an ingredient, a user must click on the pop-up.
 2. We ordered user presented recipe's based on how many ingredients are in their "SharedIngredients" catergory. Basically, the number of ingredients shared between a user's pantry and rendered recipe. The the higher the shared number, the further up the list the recipe is presented when rendered.
 

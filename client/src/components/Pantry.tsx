@@ -12,6 +12,7 @@ const Pantry: React.FC = () => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]); // State for selected items
 
+  //Loading all ingredients in from firebase
   useEffect(() => {
     console.log("loadAllIngredients()");
     loadAllIngredients();
@@ -35,8 +36,7 @@ const Pantry: React.FC = () => {
     const value = event.target.value;
     setSearchTerm(value);
     if (value.length > 0) {
-      // REPLACE WITH INGREDIENTS DATA
-      // console.log(IngredientsHolder.ingredient_list);
+      // Taking care of case-sensitivity.
       const filteredSuggestions = IngredientsHolder.ingredient_list.filter(
         (suggestion) => suggestion.toLowerCase().includes(value.toLowerCase())
       );
@@ -77,6 +77,7 @@ const Pantry: React.FC = () => {
   const handleItemClick = async (index: number) => {
     const itemToRemove = selectedItems[index];
     try {
+      //Removing ingredient from pantry
       await removeIngredient("pantry", itemToRemove);
       const updatedItems = [...selectedItems];
       updatedItems.splice(index, 1);
@@ -96,7 +97,11 @@ const Pantry: React.FC = () => {
 
   return (
     <div>
-      <div className="search-box">
+      <div
+        className="search-box"
+        aria-label="search-box"
+        aria-description="Search box for ingredients to add to pantry"
+      >
         <div className="row">
           <input
             type="text"
@@ -106,9 +111,14 @@ const Pantry: React.FC = () => {
             value={searchTerm}
             placeholder="Search ingredients to add to your pantry"
             autoComplete="off"
+            aria-description="Input box to enter ingredients"
           />
         </div>
-        <div className="result-box" id="result-box">
+        <div
+          className="result-box"
+          id="result-box"
+          aria-description="Foods to add to pantry based off search, uses autocomplete"
+        >
           <ul>
             {suggestions.map((suggestion, index) => (
               <li key={index} onClick={() => handleClick(suggestion)}>
@@ -123,7 +133,11 @@ const Pantry: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="pantry-items">
+      <div
+        className="pantry-items"
+        aria-label="pantry-items"
+        aria-description="Items in the pantry"
+      >
         <table>
           <tbody>
             {chunkArray(selectedItems, 3).map((chunk, rowIndex) => (

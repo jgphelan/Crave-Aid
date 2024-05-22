@@ -575,5 +575,6 @@ export class IngredientsHolder {
     "Ciabatta",
     "Buckwheat",
     "Prunes",
+    "Nim Telson",
   ];
 }

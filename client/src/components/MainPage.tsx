@@ -20,6 +20,14 @@ export default function MapsGearup() {
   return (
     <div>
       <h1 aria-label="Gearup Title"> Crave Aid </h1>
+      <h3 aria-label="Gearup Subtitle">
+        {" "}
+        Use the search box to add ingredients.{" "}
+      </h3>
+      <h3 aria-label="Gearup Subtitle">
+        {" "}
+        Click on the ingredient to remove it.{" "}
+      </h3>
       <div className="button-container">
         <button
           onClick={() => setSection(Section.PANTRY_PAGE)}
