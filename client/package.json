@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://jgphelan.github.io/Crave-Aid/",
   "scripts": {
     "start": "vite",
     "test": "npm run test:unit && npm run test:e2e",
