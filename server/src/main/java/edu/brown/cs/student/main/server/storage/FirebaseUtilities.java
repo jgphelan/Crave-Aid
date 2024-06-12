@@ -10,6 +10,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,21 +34,33 @@ public class FirebaseUtilities implements StorageInterface {
    */
   @SuppressWarnings("deprecation")
   public FirebaseUtilities() throws IOException {
-    // Create /resources/ folder with firebase_config.json and
-    // add your admin SDK from Firebase. see:
-    // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
-    String workingDirectory = System.getProperty("user.dir");
-    Path firebaseConfigPath =
-        Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
-    // ^-- if your /resources/firebase_config.json exists but is not found,
-    // try printing workingDirectory and messing around with this path.
+    // Read Firebase credentials from environment variables
+    String projectId = System.getenv("FIREBASE_PROJECT_ID");
+    String privateKeyId = System.getenv("FIREBASE_PRIVATE_KEY_ID");
+    String privateKey = System.getenv("FIREBASE_PRIVATE_KEY").replace("\\n", "\n");
+    String clientEmail = System.getenv("FIREBASE_CLIENT_EMAIL");
+    String clientId = System.getenv("FIREBASE_CLIENT_ID");
+    String authUri = System.getenv("FIREBASE_AUTH_URI");
+    String tokenUri = System.getenv("FIREBASE_TOKEN_URI");
+    String authProviderCertUrl = System.getenv("FIREBASE_AUTH_PROVIDER_X509_CERT_URL");
+    String clientCertUrl = System.getenv("FIREBASE_CLIENT_X509_CERT_URL");
 
-    FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath.toString());
-
-    FirebaseOptions options =
-        new FirebaseOptions.Builder()
-            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-            .build();
+    // Construct the FirebaseOptions using environment variables
+    FirebaseOptions options = new FirebaseOptions.Builder()
+        .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream((
+            "{" +
+                "\"type\": \"service_account\"," +
+                "\"project_id\": \"" + projectId + "\"," +
+                "\"private_key_id\": \"" + privateKeyId + "\"," +
+                "\"private_key\": \"" + privateKey + "\"," +
+                "\"client_email\": \"" + clientEmail + "\"," +
+                "\"client_id\": \"" + clientId + "\"," +
+                "\"auth_uri\": \"" + authUri + "\"," +
+                "\"token_uri\": \"" + tokenUri + "\"," +
+                "\"auth_provider_x509_cert_url\": \"" + authProviderCertUrl + "\"," +
+                "\"client_x509_cert_url\": \"" + clientCertUrl + "\"" +
+                "}").getBytes())))
+        .build();
 
     FirebaseApp.initializeApp(options);
   }
