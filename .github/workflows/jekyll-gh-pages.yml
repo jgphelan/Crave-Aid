@@ -26,11 +26,6 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Create Firebase Config
-        run: |
-          mkdir -p client/src/resources
-          echo "${{ secrets.FIREBASE_CONFIG }}" > client/src/main/resources/firebase_config.json
-
       - name: Install dependencies
         run: |
           cd client
